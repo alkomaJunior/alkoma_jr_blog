@@ -1,0 +1,20 @@
+{
+    "name": "administrator/alkoma_blog",
+    "authors": [
+        {
+            "name": "alkomaJunior",
+            "email": "48490387+alkomaJunior@users.noreply.github.com"
+        }
+    ],
+
+    "autoload": {
+        "psr-4": {
+            "app\\": "./"
+        }
+    },
+
+    "require": {
+        "twig/twig": "^3.0",
+        "vlucas/phpdotenv": "^5.3"
+    }
+}
