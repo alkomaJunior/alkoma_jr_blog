@@ -1,1 +1,11 @@
-<h1>404 ERROR</h1>
+{% extends 'layouts/base.html.twig' %}
+
+{% block body %}
+    {% block header %}{{ include('layouts/partials/_navbar.html.twig', {'homeActiveClass': 'active'}) }}{% endblock %}
+    <div class="container py-5 mb-4 text-center">
+        <h1 class="display-404">404</h1>
+        <h2 class="h3">Page Not Found</h2>
+        <p class="text-muted">It seems we can’t find the page you are looking for. <a href='#' class='font-weight-medium'>Go Back To Homepage</a><br> Or try using search at the top right corner of the page.</p>
+    </div>
+    {% block footer %}{{ include('layouts/partials/_footer.html.twig') }}{% endblock %}
+{% endblock %}

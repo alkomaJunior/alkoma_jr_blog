@@ -10,7 +10,7 @@
 
     $app = new Application();
 
-    $app->router->get('/', array(SiteController::class, 'home'));
+    $app->router->get('/alkoma_blog/', array(SiteController::class, 'home'));
 
     $app->run();
 

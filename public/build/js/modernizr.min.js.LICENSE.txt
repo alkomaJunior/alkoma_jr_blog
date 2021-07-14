@@ -1,0 +1,2 @@
+/*! modernizr 3.6.0 (Custom Build) | MIT *
+ * https://modernizr.com/download/?-boxsizing-cssanimations-csscalc-cssgradients-csstransforms3d-csstransformslevel2-csstransitions-preserve3d-supports-svg-svgasimg-svgclippaths-svgfilters-touchevents-setclasses !*/
