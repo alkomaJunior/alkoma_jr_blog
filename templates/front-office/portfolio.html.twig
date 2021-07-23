@@ -1,0 +1,60 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% set heroBg = "build/img/hero-bg.png" %}
+
+{% block body %}
+    {% block header %}{{ include('layouts/partials/_navbar.html.twig', {'postActiveClass': 'active'}) }}{% endblock %}
+    <!-- Page Title-->
+    {% set home = "/alkoma_blog/" %}
+    {% set portfolio = "portfolio" %}
+    <div class="d-flex p-3" aria-label="Page title" style="margin-top: 5%; margin-bottom: 5%;">
+        <div class="container text-left align-self-center">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ home }}">Accueil</a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="{{ portfolio }}">Portfolio</a>
+                    </li>
+                </ol>
+            </nav>
+            <h1 class="page-title-heading"><u>Portfolio</u></h1>
+        </div>
+    </div>
+    <div class="container pb-5 mb-3">
+        <!-- Filters-->
+        <ul class="nav nav-tabs nav-tabs-style-2 mb-4">
+            <li class="nav-item"><a class="nav-link active" href="#" data-filter="*">All&nbsp;<sup>9</sup></a></li>
+            <li class="nav-item"><a class="nav-link" href="#" data-filter=".mobile-apps">Mobile Apps&nbsp;<sup>3</sup></a></li>
+        </ul>
+        <!-- Grid-->
+        <div class="isotope-grid filter-grid cols-3">
+            <div class="gutter-sizer"></div>
+            <div class="grid-sizer"></div>
+            <!-- Portfolio Item-->
+            <div class="grid-item mobile-apps mb-30">
+                <div class="portfolio-card"><a class="portfolio-thumb" href="portfolio-single-side-gallery-grid.html"><img src="img/portfolio/01.jpg" alt="Portfolio Thumbnail"/></a>
+                    <div class="portfolio-card-body">
+                        <div class="portfolio-meta"><span class="mr-3"><i class="fe-icon-user"></i>William Smith</span><a href="#"><i class="fe-icon-heart text-accent"></i>12</a></div>
+                        <h5 class="portfolio-title"><a href="portfolio-single-side-gallery-grid.html">iOS App UI Design</a></h5><a class="tag-link" href="#">Mobile Apps</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pt-2">
+            <!-- Pagination-->
+            <nav class="pagination"><a class="prev-btn" href="#"><i class="fe-icon-chevron-left"></i>Prev</a>
+                <ul class="pages">
+                    <li class="d-block d-sm-none w-100">2 / 18</li>
+                    <li class="d-none d-sm-inline-block"><a href="#">1</a></li>
+                    <li class="d-none d-sm-inline-block active"><a href="#">2</a></li>
+                    <li class="d-none d-sm-inline-block"><a href="#">3</a></li>
+                    <li class="d-none d-sm-inline-block"><a href="#">4</a></li>
+                    <li class="d-none d-sm-inline-block"><a href="#">5</a></li>
+                    <li class="d-none d-sm-inline-block">...</li>
+                    <li class="d-none d-sm-inline-block"><a href="#">18</a></li>
+                </ul><a class="next-btn" href="#">Next<i class="fe-icon-chevron-right"></i></a>
+            </nav>
+        </div>
+    </div>
+    {% block footer %}{{ include('layouts/partials/_footer.html.twig') }}{% endblock %}
+{% endblock %}

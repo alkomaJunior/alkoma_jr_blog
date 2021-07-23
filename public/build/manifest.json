@@ -20,5 +20,9 @@
   "build/img/ico-aj.png": "/build/img/ico-aj.png",
   "build/js/theme.min.js": "/build/js/theme.min.js",
   "build/js/modernizr.min.js": "/build/js/modernizr.min.js",
-  "build/img/logo_alkoma.png": "/build/img/logo_alkoma.png"
+  "build/img/icons/ui-design.svg": "/build/img/icons/ui-design.svg",
+  "build/img/logo_alkoma.png": "/build/img/logo_alkoma.png",
+  "build/img/icons/user-data.svg": "/build/img/icons/user-data.svg",
+  "build/img/icons/prototyping.svg": "/build/img/icons/prototyping.svg",
+  "build/img/icons/coding.svg": "/build/img/icons/coding.svg"
 }

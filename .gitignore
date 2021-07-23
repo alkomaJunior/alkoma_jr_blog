@@ -2,3 +2,5 @@
 .env
 /vendor
 /node_modules
+/assets
+webpack.config.js

@@ -35,11 +35,15 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-6">
+                        {% set home = "/alkoma_blog/" %}
+                        {% set portfolio = "portfolio" %}
+                        {% set post = "posts" %}
+                        {% set login = "connexion" %}
                         <ul class="list-unstyled">
-                            <li class="mb-0"><a class="dropdown-item lead py-2" href="#">Accueil</a></li>
-                            <li class="mb-0"><a class="dropdown-item lead py-2" href="#">Portfolio</a></li>
-                            <li class="mb-0"><a class="dropdown-item lead py-2" href="#">Forum</a></li>
-                            <li class="mb-0"><a class="dropdown-item lead py-2" href="#">Connexion</a></li>
+                            <li class="mb-0"><a class="dropdown-item lead py-2" href="{{ home }}">Accueil</a></li>
+                            <li class="mb-0"><a class="dropdown-item lead py-2" href="{{ portfolio }}">Portfolio</a></li>
+                            <li class="mb-0"><a class="dropdown-item lead py-2" href="{{ post }}">Blog</a></li>
+                            <li class="mb-0"><a class="dropdown-item lead py-2" href="{{ login }}">Connexion</a></li>
                         </ul>
                     </div>
                     <div class="col-sm-6 d-none d-sm-block pt-3">

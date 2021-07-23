@@ -1,9 +1,9 @@
 <?php
 
 
-namespace app\core\form;
+namespace app\config\form;
 
-use app\core\Model;
+use app\config\Model;
 
 /**
  * Class Form
@@ -11,19 +11,64 @@ use app\core\Model;
  */
 class Form
 {
-    public static function begin($action, $method): Form
-    {
-        echo "<form action=\"{$action}\" method=\"{$method}\">";
-        return new Form();
+    protected string $action;
+    protected string $method;
+
+    public function __construct($action, $method){
+        $this->action = $action;
+        $this->method = $method;
     }
 
-    public static function end()
+    /**
+     * @return string
+     */
+    public function getAction(): string
     {
-        echo '</form>';
+        return $this->action;
     }
 
-    public function field (Model $model, $attribute): Field
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
-        return new Field($model, $attribute);
+        return $this->method;
+    }
+
+    /**
+     * @param string $action
+     */
+    public function setAction(string $action): void
+    {
+        $this->action = $action;
+    }
+
+    /**
+     * @param string $method
+     */
+    public function setMethod(string $method): void
+    {
+        $this->method = $method;
+    }
+
+    public function end(): string
+    {
+        return '</form>';
+    }
+
+    public function field (Model $model, string $attribute, string $formType, string $placeholder, string $inputTypeOrRow, string $label): Field
+    {
+        return new Field($model, $attribute, $formType, $placeholder, $inputTypeOrRow, $label);
+    }
+
+    public function __toString(){
+        return sprintf('
+            <form class="needs-validation pt-4 pb-5" action="%s" method="%s">
+        ',
+
+        $this->action,
+        $this->method,
+
+        );
     }
 }

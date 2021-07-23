@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\core;
+namespace app\config;
 
 /**
  * Class Model
@@ -10,6 +10,7 @@ namespace app\core;
 abstract class Model
 {
     public array $errors = [];
+    //public array $rules = [];
 
     abstract public function rules(): array;
 
@@ -27,14 +28,18 @@ abstract class Model
         }
     }
 
-    public function validate(){
+    public function isValid()
+    {
+        var_dump($this->rules());
         foreach ($this->rules() as $attribute => $rules){
             $value = $this->{$attribute};
+
             foreach ($rules as $rule){
                 $ruleName = $rule;
                 if (!is_string($ruleName)){
                     $ruleName = $rule[0];
                 }
+                var_dump($value);
                 if ($ruleName === self::RULE_REQUIRED && !$value){
                     $this->addError($attribute, self::RULE_REQUIRED);
                 }
@@ -74,5 +79,14 @@ abstract class Model
             self::RULE_MAX => 'Max length of this field must be {max}',
             self::RULE_MATCH => 'This field must be the same as {match}',
         ];
+    }
+
+    public function hasError($attribute){
+        return $this->errors[$attribute] ?? false;
+    }
+
+    public function getFirstError($attribute)
+    {
+        return $this->errors[$attribute][0] ?? false;
     }
 }

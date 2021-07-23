@@ -1,0 +1,17 @@
+<div class="wizard">
+    {{ formOpen_|raw }}
+        <input type="hidden" name="login" value="login">
+        <div class="wizard-body pt-3">
+            <h3 class="h5 pb-2 ">Or using form below</h3>
+            <div class="input-group form-group">
+                {{ emailC|raw }}
+            </div>
+            <div class="input-group form-group">
+                {{ passwordC|raw }}
+            </div>
+        </div>
+        <div class="wizard-footer text-right">
+            <button class="btn btn-primary" type="submit">Login</button>
+        </div>
+    {{ formClose_|raw }}
+</div>
