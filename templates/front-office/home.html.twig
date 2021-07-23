@@ -1,1 +1,136 @@
-<h1>Hello</h1>
+{% extends 'layouts/base.html.twig' %}
+
+{% set heroBg = "build/img/hero-bg.png" %}
+
+{% block body %}
+    {% block header %}{{ include('layouts/partials/_navbar.html.twig', {'homeActiveClass': 'active'}) }}{% endblock %}
+    <section class="bg-center bg-repeat-y box-shadow" style="background-image: url({{ heroBg }});">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 bg-secondary order-md-2 pt-md-5 overflow-hidden">
+                    <div class="mt-5 pt-5"><img class="d-block mx-auto" src="#" alt="alkoma-jr" data-parallax="{&quot;scale&quot; : 1.15}"></div>
+                </div>
+                <div class="col-md-6 bg-white order-md-1 py-md-5 overflow-hidden">
+                    <div class="mt-md-5 py-5 text-center text-md-left">
+                        <h2 class="h3 text-body pt-md-5 pb-3">
+                            <span class="d-block font-family-body font-weight-light pb-2">Hello!</span>
+                            <span class="d-block font-family-body font-weight-light">Je suis <span class='font-weight-bold'>ALKOMA JR</span></span>
+                        </h2>
+                        <h1 class="mb-4 mb-md-5 text-primary" data-parallax="{&quot;x&quot; : 50}">
+                            Dev Symfony
+                        </h1>
+                        <div class="pt-3">
+                            <a class="scroll-to btn btn-style-4 btn-primary mr-3 mb-3" href="#contacts" data-parallax="{&quot;y&quot; : 25}">Me contacter</a>
+                            <a class="scroll-to btn btn-style-4 btn-gradient btn-icon-right mb-3" href="#works" data-parallax="{&quot;y&quot; : -25}">
+                                <i class="fe-icon-arrow-down text-md"></i>Portfolio
+                            </a>
+                        </div>
+                        <div class="pt-4 pt-md-5">
+                            <a class="social-btn sb-style-6 sb-facebook" href="#"><i class="socicon-facebook"></i></a>
+                            <a class="social-btn sb-style-6 sb-instagram" href="#" data-parallax="{&quot;y&quot; : -25}"><i class="socicon-instagram"></i></a>
+                            <a class="social-btn sb-style-6 sb-linkedin" href="#" data-parallax="{&quot;y&quot; : 25}"><i class="socicon-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- About-->
+    <section class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8 pt-3 text-center"><span class="d-block text-lg mb-2">Quelques mots sur moi.</span>
+                <h2 class="h3 block-title mb-3">Analyse et Programmation</h2>
+                <p class="text-muted text-center">
+                     De nationalité togolaise, je suis titulaire d'un diplôme d'Analyste Programmeur délivré par la représentation
+                     du Togo de l'Institut Africain d'Informatique (IAI-TOGO). Sérieux, rigoureux, dynamique et passionnée par mon
+                     métier je fais de toutes vos idées de projets des réalités en usant de ma technologie majeure qu'est Symfony.
+                </p>
+            </div>
+        </div>
+        <hr class="mt-5">
+    </section>
+    <!-- Process-->
+    {% set u = "build/img/icons/user-data.svg" %}
+    {% set p = "build/img/icons/prototyping.svg" %}
+    {% set d = "build/img/icons/ui-design.svg" %}
+    {% set c = "build/img/icons/coding.svg" %}
+    <section class="container pb-4">
+        <h2 class="h3 block-title text-center pt-2">Comment je procède ?</h2>
+        <div class="row py-2">
+            <div class="col-lg-3 col-sm-6">
+                <!-- Step-->
+                <div class="step step-with-icon">
+                    <div class="step-number">1</div>
+                    <div class="step-icon"><img src="{{ u }}" alt="#"></div>
+                    <h3 class="step-title">Analyse et Conception</h3>
+                    <p class="step-text text-sm">
+                        Au cours de cette première étape je reccueille vos besoins puis par la suite je les étudis et les traduis en fonctionnalités.Un cahier des charges et un document de concepion seront mis à votre disposition.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <!-- Step-->
+                <div class="step step-with-icon">
+                    <div class="step-number">2</div>
+                    <div class="step-icon"><img src="{{ c }}" alt="#"></div>
+                    <h3 class="step-title">Développement</h3>
+                    <p class="step-text text-sm">
+                        Au cours de cette deuxième étape toutes les fonctionnalités sont soigneusement développées à l'aide de toutes les technologies tournant autour de Symfony.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <!-- Step-->
+                <div class="step step-with-icon">
+                    <div class="step-number">3</div>
+                    <div class="step-icon"><img src="{{ d }}" alt="#"></div>
+                    <h3 class="step-title">Test et Mise en production</h3>
+                    <p class="step-text text-sm">
+                        Arrivé à ce niveau je teste en profondeur la solution mise en plate et ensuite je met en production avec les accès nécessaire. La sécurité est implémenté tout ong du processus de dev.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <!-- Step-->
+                <div class="step step-with-icon">
+                    <div class="step-number">4</div>
+                    <div class="step-icon"><img src="{{ p }}" alt="#"></div>
+                    <h3 class="step-title">Maintenance</h3>
+                    <p class="step-text text-sm">
+                        Une fois que vous aurez commencé à utiliser la solution et que vous serez satisfait je vous propose différentes sortes de contrat de maintenance garantissant l'ajout de fonctionnalités.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Portfolio-->
+    <section class="pb-5 mb-4" data-offset-top="105" id="works">
+        <div class="bg-white mx-auto px-3 px-xl-5 pt-4 pb-5 box-shadow" style="max-width: 1300px;">
+            <h2 class="h3 block-title text-center">Portfolio<small>Une collection triée sur le volet de mes travaux les plus marquants</small></h2>
+            <div class="row pt-4">
+                <!-- Portfolio Item-->
+                <div class="col-md-4 col-sm-6 mb-30">
+                    <div class="portfolio-card"><a class="portfolio-thumb" href="#"><img src="#" alt="Portfolio Thumbnail"/></a>
+                        <div class="portfolio-card-body">
+                            <div class="portfolio-meta"><a href="#"><i class="fe-icon-heart text-accent"></i>12</a></div>
+                            <h5 class="portfolio-title"><a href="#">iOS App UI Design</a></h5><a class="tag-link" href="#">Mobile Apps</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center pt-2"><a class="btn btn-style-4 btn-gradient btn-icon-right" href="#"><i class="fe-icon-arrow-right text-md"></i>Voir plus</a></div>
+        </div>
+    </section>
+    <!-- Contacts-->
+    {% set cBg = "build/img/contacts-bg.png" %}
+    <section class="bg-secondary bg-cover bg-no-repeat pt-5 pb-4" style="background-image: url({{ cBg }});" data-offset-top="-10" id="contacts">
+        <div class="container py-2">
+            <h2 class="h3 block-title text-center">Contactez-moi<small>Je serai heureux de répondre à toutes vos questions. Je réponds normalement dans les 2 à 3 jours ouvrables.</small></h2>
+            {{ include('forms/_contactForm.html.twig') }}
+        </div>
+    </section>
+    <!-- Back To Top Button--><a class="scroll-to-top-btn" href="#"><i class="fe-icon-chevron-up"></i></a>
+    <!-- Backdrop-->
+    <div class="site-backdrop"></div>
+    {% block footer %}{{ include('layouts/partials/_footer.html.twig') }}{% endblock %}
+{% endblock %}

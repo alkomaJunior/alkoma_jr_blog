@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %} ALKOMA-JR {% endblock %}</title>
+    <!-- Viewport-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon and Touch Icons-->
+    {% set icoImg = "build/img/ico-aj.png" %}
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ icoImg }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ icoImg }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ icoImg }}">
+
+    {% block stylesheets %}
+        {% set vendorCssPath = "build/css/vendor.min.css" %}
+        {% set themeCssPath = "build/css/theme.min.css" %}
+        <!-- Vendor Styles including: Font Icons, Plugins, etc.-->
+        <link rel="stylesheet" media="screen" href="{{ vendorCssPath }}">
+        <!-- Main Theme Styles + Bootstrap-->
+        <link rel="stylesheet" media="screen" href="{{ themeCssPath }}">
+    {% endblock %}
+
+</head>
+<body>
+
+{#  {{ include('front/layouts/partials/_flashMessage.html.twig') }} #}
+
+{% block body %}{% endblock %}
+
+{% block javascripts %}
+    {% set vendorJsPath = "build/js/vendor.min.js" %}
+    {% set themeJsPath = "build/js/theme.min.js" %}
+    {% set modernizrJsPath = "build/js/modernizr.min.js" %}
+    <!-- Modernizr-->
+    <script src="{{ modernizrJsPath }}"></script>
+    <!-- JavaScript (jQuery) libraries, plugins and custom scripts-->
+    <script src="{{ vendorJsPath }}"></script>
+    <script src="{{ themeJsPath }}"></script>
+{% endblock %}
+
+</body>
+</html>

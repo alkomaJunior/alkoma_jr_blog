@@ -1,0 +1,65 @@
+{% set logoUrl = "build/img/logo_alkoma.png" %}
+{% set fsOverlay = "build/img/fs-overlay-bg.png" %}
+
+<!-- Google Tag Manager (noscript)-->
+<noscript>
+    <iframe src="http://www.googletagmanager.com/ns.html?id=GTM-PVV9F7F" height="0" width="0" style="display: none; visibility: hidden;"></iframe>
+</noscript>
+<!-- Navbar: Ghost-->
+<!-- Remove "navbar-sticky" class to make navigation bar scrollable with the page.-->
+<header class="navbar-ghost navbar-floating navbar-sticky">
+    <div class="container text-center">
+        <a class="search-trigger" href="#fs-search" data-toggle="fullscreen-overlay"><i class="fe-icon-search"></i></a><a class="menu-trigger" href="#fs-menu" data-toggle="fullscreen-overlay"><span>Menu</span><i class="fe-icon-menu"></i></a>
+        <a class="navbar-brand d-inline-block" href="#"><img src="{{ logoUrl }}" alt="ALKOMA-JR"/></a>
+    </div>
+</header>
+<!-- Full Screen Search-->
+<div class="fs-overlay-wrapper" id="fs-search" style="background-image: url({{ fsOverlay }});"><span class="fs-overlay-close"><i class="fe-icon-x"></i></span>
+    <div class="fs-overlay-inner">
+        <div class="fs-overlay-content">
+            <div class="container">
+                <form class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text"><i class="fe-icon-search"></i></div>
+                    </div>
+                    <input class="form-control" type="text" placeholder="Search site...">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Full Screen Menu-->
+<div class="fs-overlay-wrapper" id="fs-menu" style="background-image: url({{ fsOverlay }});"><span class="fs-overlay-close"><i class="fe-icon-x"></i></span>
+    <div class="fs-overlay-inner">
+        <div class="fs-overlay-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        {% set home = "/alkoma_blog/" %}
+                        {% set portfolio = "portfolio" %}
+                        {% set post = "posts" %}
+                        {% set login = "connexion" %}
+                        <ul class="list-unstyled">
+                            <li class="mb-0"><a class="dropdown-item lead py-2" href="{{ home }}">Accueil</a></li>
+                            <li class="mb-0"><a class="dropdown-item lead py-2" href="{{ portfolio }}">Portfolio</a></li>
+                            <li class="mb-0"><a class="dropdown-item lead py-2" href="{{ post }}">Blog</a></li>
+                            <li class="mb-0"><a class="dropdown-item lead py-2" href="{{ login }}">Connexion</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 d-none d-sm-block pt-3">
+                        <h6>Contacts</h6>
+                        <ul class="list-icon mb-4 pb-2">
+                            <li><i class="fe-icon-map-pin text-muted"></i>BP : 60995 Lomé, TOGO</li>
+                            <li><i class="fe-icon-phone text-muted"></i>+228 99 53 59 06</li>
+                            <li><i class="fe-icon-mail text-muted"></i>alkomajunior@outlook.com</li>
+                        </ul>
+                        <h6 class="pb-2">Social</h6>
+                        <a class="social-btn sb-style-6 sb-facebook" href="#"><i class="socicon-facebook"></i></a>
+                        <a class="social-btn sb-style-6 sb-instagram" href="#"><i class="socicon-instagram"></i></a>
+                        <a class="social-btn sb-style-6 sb-linkedin" href="#"><i class="socicon-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
