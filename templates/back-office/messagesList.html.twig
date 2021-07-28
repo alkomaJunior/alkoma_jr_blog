@@ -1,0 +1,73 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% set heroBg = "build/img/hero-bg.png" %}
+
+{% block body %}
+    {% block header %}{{ include('layouts/partials/_navbar.html.twig', {'messageActiveClass': 'active'}) }}{% endblock %}
+    <!-- Page Title-->
+    {% set home = "me" %}
+    {% set message = "messages_index" %}
+    <div class="d-flex p-3" aria-label="Page title" style="margin-top: 5%; margin-bottom: 5%;">
+        <div class="container text-left align-self-center">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ home }}">Mes informations</a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="{{ message }}">Mes messages</a>
+                    </li>
+                </ol>
+            </nav>
+            <h1 class="page-title-heading"><u>Mes messages</u></h1>
+        </div>
+    </div>
+    <!-- Page Content-->
+    <div class="container mb-4">
+        <div class="row">
+            {{ include('layouts/partials/_sidebar.html.twig') }}
+            <!-- Orders Table-->
+            <div class="col-lg-8 pb-5">
+                <div class="table-responsive">
+                    <table id="example" class="table table-hover mb-0">
+                        <thead>
+                        <tr>
+                            <th>Expéditeur</th>
+                            <th>Date d'envoi</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for message in messagesList %}
+                                <tr>
+                                    <td><a class="navi-link" href="#" data-toggle="modal">{{ message['name'] }}</a></td>
+                                    <td>{{ message['sendDate']|date('Y-m-d H:i:s') }}</td>
+                                    <td><span class="badge badge-danger m-0">{{ message['emailAddress'] }}</span></td>
+                                    <td>
+                                        <a href="#" style="text-decoration: none"><span><i class="fe-icon-eye"></i></span></a>
+                                        <a href="#" style="text-decoration: none"><span><i class="fe-icon-edit"></i></span></a>
+                                        <a href="#" style="text-decoration: none"><span><i class="fe-icon-trash"></i></span></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable({
+                "bLengthChange": false,
+                "bFilter": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json",
+                }
+            });
+        } );
+    </script>
+
+    {% block footer %}{{ include('layouts/partials/_footer.html.twig') }}{% endblock %}
+{% endblock %}

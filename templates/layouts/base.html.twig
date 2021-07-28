@@ -18,12 +18,13 @@
         <link rel="stylesheet" media="screen" href="{{ vendorCssPath }}">
         <!-- Main Theme Styles + Bootstrap-->
         <link rel="stylesheet" media="screen" href="{{ themeCssPath }}">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.23/af-2.3.5/b-1.6.5/cr-1.5.3/fc-3.3.2/fh-3.1.8/kt-2.6.0/r-2.2.7/rg-1.1.2/rr-1.2.7/sc-2.0.3/sb-1.0.1/sp-1.2.2/sl-1.3.1/datatables.min.css"/>
     {% endblock %}
 
 </head>
 <body>
 
-{#  {{ include('front/layouts/partials/_flashMessage.html.twig') }} #}
+{# {{ include('layouts/partials/_flashMessages.html.twig') }} #}
 
 {% block body %}{% endblock %}
 
@@ -36,6 +37,7 @@
     <!-- JavaScript (jQuery) libraries, plugins and custom scripts-->
     <script src="{{ vendorJsPath }}"></script>
     <script src="{{ themeJsPath }}"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.23/af-2.3.5/b-1.6.5/cr-1.5.3/fc-3.3.2/fh-3.1.8/kt-2.6.0/r-2.2.7/rg-1.1.2/rr-1.2.7/sc-2.0.3/sb-1.0.1/sp-1.2.2/sl-1.3.1/datatables.min.js"></script>
 {% endblock %}
 
 </body>

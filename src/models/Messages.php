@@ -4,14 +4,21 @@
 namespace app\src\models;
 
 
-use app\config\Model;
+use app\config\Repository;
 
-class Messages extends Model
+class Messages extends Repository
 {
+    protected $id;
     protected $name;
     protected $emailAddress;
     protected $subject;
     protected $message;
+    protected $sendDate;
+
+    public function tableName(): string
+    {
+        return 'messages';
+    }
 
     public function rules(): array
     {
@@ -19,11 +26,56 @@ class Messages extends Model
         $proprieties = $reflect->getProperties();
 
         return [
-            $proprieties[0]->getName() => [self::RULE_REQUIRED],
-            $proprieties[1]->getName() => [self::RULE_REQUIRED, self::RULE_EMAIL],
-            $proprieties[2]->getName() => [self::RULE_REQUIRED],
+            $proprieties[1]->getName() => [self::RULE_REQUIRED],
+            $proprieties[2]->getName() => [self::RULE_REQUIRED, self::RULE_EMAIL],
             $proprieties[3]->getName() => [self::RULE_REQUIRED],
+            $proprieties[4]->getName() => [self::RULE_REQUIRED],
         ];
+    }
+
+    public function attributes(): array
+    {
+        $reflect = new \ReflectionClass($this);
+        $proprieties = $reflect->getProperties();
+
+        return [
+            $proprieties[1]->getName(),
+            $proprieties[2]->getName(),
+            $proprieties[3]->getName(),
+            $proprieties[4]->getName(),
+        ];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSendDate()
+    {
+        return $this->sendDate;
+    }
+
+    /**
+     * @param mixed $sendDate
+     */
+    public function setSendDate($sendDate): void
+    {
+        $this->sendDate = $sendDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
     }
 
     /**
@@ -51,11 +103,11 @@ class Messages extends Model
     }
 
     /**
-     * @param mixed $emailAdress
+     * @param mixed $emailAddress
      */
-    public function setEmailAddress($emailAdress): void
+    public function setEmailAddress($emailAddress): void
     {
-        $this->emailAddress = $emailAdress;
+        $this->emailAddress = $emailAddress;
     }
 
     /**
@@ -89,5 +141,4 @@ class Messages extends Model
     {
         $this->message = $message;
     }
-
 }

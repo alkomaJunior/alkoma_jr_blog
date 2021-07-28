@@ -25,12 +25,10 @@ class SiteController extends Controller
      */
     public function home(){
 
+        var_dump($this::$user);
         //form building
         $message = new Messages();
-        $messagesForm = new MessagesType($message, "", "post");
-
-        $formBody = $messagesForm->buildForm()['body'];
-        $formClose = $messagesForm->buildForm()['end'];
+        $messagesForm = (new MessagesType($message, "", "post"))->createForm();
 
         //form validation
             //check if form is submitted
@@ -43,19 +41,14 @@ class SiteController extends Controller
 
             //check if form is valid and do actions
             if ($message->isValid()){
-                echo "validate success";
+                $message->new();
+                Application::$app->flashMessage->success('Votre message a été envoyé avec succès.', '/alkoma_blog/');
             }
-            echo "google";
-            var_dump($data);
         }
 
         echo $this::twig()->render('front-office/home.html.twig', [
-            'formOpen' => $messagesForm,
-            'field1' => $formBody[0],
-            'field2' => $formBody[1],
-            'field3' => $formBody[2],
-            'field4' => $formBody[3],
-            'formClose' => $formClose,
+            'messageForm' => $messagesForm,
+            'userId'        => $this::$user->getId(),
         ]);
     }
 

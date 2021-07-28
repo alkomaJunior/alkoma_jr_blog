@@ -23,19 +23,16 @@ class UsersController extends Controller
      */
     public function registerOrLogin(){
 
+        $_SESSION['redirect_url_1'] = $_SERVER['HTTP_REFERER'];
+        var_dump($_SESSION['redirect_url_1']);
+
         //form building for register
         $user = new Users();
-        $usersForm = new UsersType($user, "register", "post");
-
-        $formBody = $usersForm->buildForm()['body'];
-        $formClose = $usersForm->buildForm()['end'];
+        $usersRegisterForm = (new UsersType($user, "register", "post"))->createForm();
 
         //form building for login
         $auth = new Auth();
-        $authForm = new AuthType($auth, "login", "post");
-
-        $formContent = $authForm->buildForm()['body'];
-        $formClose_ = $authForm->buildForm()['end'];
+        $authForm = (new AuthType($auth, "login", "post"))->createForm();
 
         //form validation
         //check if form is submitted
@@ -43,41 +40,70 @@ class UsersController extends Controller
             //getting form data
             $data = Application::$app->request->getRequestData();
 
-            if (!empty($data['register'])){
+            if (!empty($data['register']))
+            {
                 //hydration of the class
                 $user->loadData($data);
 
                 //check if form is valid and do actions
                 if ($user->isValid()){
-                    echo "validate success register";
+                    $user->setRole("USER");
+                    $user->setPassword(password_hash($user->getPassword(), PASSWORD_ARGON2ID));
+                    $user->new();
+                    Application::$app->flashMessage->success('Thanks for registration', '/alkoma_blog/');
                 }
-                echo "googleR";
-                var_dump($data);
             }
-            else{
+            else
+            {
                 $auth->loadData($data);
+                $user->setEmailAddress($auth->getEmailC());
+                $user->setPassword($auth->getPasswordC());
 
                 if ($auth->isValid()){
-                    echo "validate success login";
+
+                    $user = $user->findOne(['emailAddress' => $user->getEmailAddress()]);
+
+                    if (!$user){
+
+                        $auth->addError('emailC', 'Email ou Mot de passe incorrect');
+                        $auth->addError('passwordC', 'Email ou Mot de passe incorrect');
+
+                        echo $this::twig()->render('front-office/connexion.html.twig', [
+                            'usersRegisterForm' => $usersRegisterForm,
+                            'authForm' => $authForm,
+                        ]);
+
+                        return false;
+                    }
+
+                    if (!password_verify($auth->getPasswordC(), $user->getPassword())){
+
+                        $auth->addError('emailC', 'Email ou Mot de passe incorrect');
+                        $auth->addError('passwordC', 'Email ou Mot de passe incorrect');
+
+                        echo $this::twig()->render('front-office/connexion.html.twig', [
+                            'usersRegisterForm' => $usersRegisterForm,
+                            'authForm' => $authForm,
+                        ]);
+
+                        return false;
+                    }
+
+                    return Application::$app->login($user, $_SESSION['redirect_url_1']);
                 }
-                echo "googleL";
-                var_dump($data);
             }
         }
 
         echo $this::twig()->render('front-office/connexion.html.twig', [
-            'formOpen' => $usersForm,
-            'fistName' => $formBody[0],
-            'lastName' => $formBody[1],
-            'email' => $formBody[2],
-            'tel' => $formBody[3],
-            'pass' => $formBody[4],
-            'confirmPass' => $formBody[5],
-            'formClose' => $formClose,
-            'formOpen_' => $authForm,
-            'emailC' => $formContent[0],
-            'passwordC' => $formContent[1],
-            'formClose_' => $formClose_,
+            'usersRegisterForm' => $usersRegisterForm,
+            'authForm' => $authForm,
         ]);
+
+        return "";
+    }
+
+    public function logout(){
+        Application::$app->logout();
+        Application::$app->response->redirect('/alkoma_blog/');
     }
 }
