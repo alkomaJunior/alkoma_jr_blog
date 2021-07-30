@@ -103,12 +103,15 @@ class Application
         $this->controller = $controller;
     }
 
-    public function login(UserModel $user, $redirectUrl)
+    public function login(UserModel $user)
     {
         $this->user = $user;
         self::$app->session->set('user', $this->user->getId());
 
-        $this->response->redirect($redirectUrl);
+        if ($this->getUser()->getRole() === "USER"){
+            $this->response->redirect('/alkoma_blog/');
+        }
+        else $this->response->redirect('/alkoma_blog/me');
 
         return true;
     }

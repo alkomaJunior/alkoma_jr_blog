@@ -14,6 +14,7 @@ class Messages extends Repository
     protected $subject;
     protected $message;
     protected $sendDate;
+    protected $isRead;
 
     public function tableName(): string
     {
@@ -43,7 +44,24 @@ class Messages extends Repository
             $proprieties[2]->getName(),
             $proprieties[3]->getName(),
             $proprieties[4]->getName(),
+            $proprieties[6]->getName(),
         ];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsRead()
+    {
+        return $this->isRead;
+    }
+
+    /**
+     * @param mixed $isRead
+     */
+    public function setIsRead($isRead): void
+    {
+        $this->isRead = $isRead;
     }
 
     /**

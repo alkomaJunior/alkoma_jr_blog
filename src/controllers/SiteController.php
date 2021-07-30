@@ -7,6 +7,7 @@ namespace app\src\controllers;
 use app\config\Application;
 use app\config\Controller;
 use app\src\form\MessagesType;
+use app\src\models\Me;
 use app\src\models\Messages;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -25,7 +26,6 @@ class SiteController extends Controller
      */
     public function home(){
 
-        var_dump($this::$user);
         //form building
         $message = new Messages();
         $messagesForm = (new MessagesType($message, "", "post"))->createForm();
@@ -48,7 +48,8 @@ class SiteController extends Controller
 
         echo $this::twig()->render('front-office/home.html.twig', [
             'messageForm' => $messagesForm,
-            'userId'        => $this::$user->getId(),
+            'user'        => $this::$user,
+            'me'          => (new Me())->findOne(['id' => 1]),
         ]);
     }
 
@@ -58,6 +59,9 @@ class SiteController extends Controller
      * @throws LoaderError
      */
     public function _404(){
-        echo $this::twig()->render('/errors/_404.html.twig');
+        echo $this::twig()->render('/errors/_404.html.twig', [
+            'user'        => $this::$user,
+            'me'          => (new Me())->findOne(['id' => 1]),
+        ]);
     }
 }

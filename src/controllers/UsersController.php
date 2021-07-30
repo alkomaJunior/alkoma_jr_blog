@@ -9,6 +9,7 @@ use app\config\Controller;
 use app\src\form\AuthType;
 use app\src\form\UsersType;
 use app\src\models\Auth;
+use app\src\models\Me;
 use app\src\models\Users;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -22,9 +23,6 @@ class UsersController extends Controller
      * @throws LoaderError
      */
     public function registerOrLogin(){
-
-        $_SESSION['redirect_url_1'] = $_SERVER['HTTP_REFERER'];
-        var_dump($_SESSION['redirect_url_1']);
 
         //form building for register
         $user = new Users();
@@ -71,6 +69,7 @@ class UsersController extends Controller
                         echo $this::twig()->render('front-office/connexion.html.twig', [
                             'usersRegisterForm' => $usersRegisterForm,
                             'authForm' => $authForm,
+                            'me'          => (new Me())->findOne(['id' => 1]),
                         ]);
 
                         return false;
@@ -84,12 +83,13 @@ class UsersController extends Controller
                         echo $this::twig()->render('front-office/connexion.html.twig', [
                             'usersRegisterForm' => $usersRegisterForm,
                             'authForm' => $authForm,
+                            'me'          => (new Me())->findOne(['id' => 1]),
                         ]);
 
                         return false;
                     }
 
-                    return Application::$app->login($user, $_SESSION['redirect_url_1']);
+                    return Application::$app->login($user);
                 }
             }
         }
@@ -97,6 +97,8 @@ class UsersController extends Controller
         echo $this::twig()->render('front-office/connexion.html.twig', [
             'usersRegisterForm' => $usersRegisterForm,
             'authForm' => $authForm,
+            'user'        => $this::$user,
+            'me'          => (new Me())->findOne(['id' => 1]),
         ]);
 
         return "";

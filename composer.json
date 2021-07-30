@@ -17,6 +17,7 @@
         "twig/twig": "^3.0",
         "vlucas/phpdotenv": "^5.3",
         "ext-pdo": "*",
-        "plasticbrain/php-flash-messages": "^1.0"
+        "plasticbrain/php-flash-messages": "^1.0",
+        "gilbitron/easycsrf": "^1.4"
     }
 }
