@@ -4,8 +4,57 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e75f342e6aeb4bb492940f5570622ff5",
+    "content-hash": "e75149d526aacdf617390296a7cc9120",
     "packages": [
+        {
+            "name": "gilbitron/easycsrf",
+            "version": "1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gilbitron/EasyCSRF.git",
+                "reference": "f1976299d23da712365c42a08b25bbf6eecd26f6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gilbitron/EasyCSRF/zipball/f1976299d23da712365c42a08b25bbf6eecd26f6",
+                "reference": "f1976299d23da712365c42a08b25bbf6eecd26f6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "EasyCSRF\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gilbert Pellegrom",
+                    "email": "gilbert@pellegrom.me"
+                }
+            ],
+            "description": "A simple, standalone CSRF protection library",
+            "support": {
+                "issues": "https://github.com/gilbitron/EasyCSRF/issues",
+                "source": "https://github.com/gilbitron/EasyCSRF/tree/1.4.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/gilbitron",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-01-19T10:02:27+00:00"
+        },
         {
             "name": "graham-campbell/result-type",
             "version": "v1.0.1",
@@ -140,6 +189,52 @@
                 }
             ],
             "time": "2020-07-20T17:29:33+00:00"
+        },
+        {
+            "name": "plasticbrain/php-flash-messages",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/plasticbrain/PhpFlashMessages.git",
+                "reference": "b565762619342057ce561de20d0f2f6e14f9aa77"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/plasticbrain/PhpFlashMessages/zipball/b565762619342057ce561de20d0f2f6e14f9aa77",
+                "reference": "b565762619342057ce561de20d0f2f6e14f9aa77",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Plasticbrain\\FlashMessages\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mike Everhart",
+                    "email": "mike@plasticbrain.net"
+                }
+            ],
+            "description": "A modern take on PHP session-based flash messages",
+            "keywords": [
+                "bootstrap",
+                "flash",
+                "messages",
+                "session"
+            ],
+            "support": {
+                "issues": "https://github.com/plasticbrain/PhpFlashMessages/issues",
+                "source": "https://github.com/plasticbrain/PhpFlashMessages/tree/master"
+            },
+            "time": "2016-04-01T08:39:38+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -546,7 +641,9 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "ext-pdo": "*"
+    },
     "platform-dev": [],
     "plugin-api-version": "2.0.0"
 }

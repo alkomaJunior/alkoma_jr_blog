@@ -22,23 +22,21 @@ class MessagesType extends Form
         $this->model = $model;
         $this->method = $method;
         $this->action = $action;
-        return parent::__construct($this->action, $this->method);
+        parent::__construct($this->action, $this->method);
     }
 
-    public function buildForm(): array
+    public function createForm(): array
     {
         $reflect = new \ReflectionClass($this->model);
         $proprieties = $reflect->getProperties();
 
         return [
-            'body'  => [
-                $this->field($this->model, $proprieties[0]->getName(), "input", "Veuillez renseigner votre nom", "text", "Nom et Prénoms"),
-                $this->field($this->model, $proprieties[1]->getName(), "input", "Veuillez renseigner votre adresse email", "text", "Adresse email"),
-                $this->field($this->model, $proprieties[2]->getName(), "input", "Veuillez donner un titre à votre message", "text", "Sujet"),
-                $this->field($this->model, $proprieties[3]->getName(), "!input", "Veuillez écrire votre message", "7", "Message"),
-
-            ],
-            'end'  => $this->end(),
+            'begin'    =>    new Form($this->action, $this->method),
+            'name'     =>    $this->field($this->model, $proprieties[1]->getName(), "input", "Veuillez renseigner votre nom", "text", "Nom et Prénoms"),
+            'email'    =>    $this->field($this->model, $proprieties[2]->getName(), "input", "Veuillez renseigner votre adresse email", "text", "Adresse email"),
+            'subject'  =>    $this->field($this->model, $proprieties[3]->getName(), "input", "Veuillez donner un titre à votre message", "text", "Sujet"),
+            'message'  =>    $this->field($this->model, $proprieties[4]->getName(), "!input", "Veuillez écrire votre message", "7", "Message"),
+            'end'      =>    $this->end(),
         ];
     }
 }

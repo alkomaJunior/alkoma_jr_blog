@@ -1,0 +1,112 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% set heroBg = "build/img/hero-bg.png" %}
+{% set postShow = "posts-show?" %}
+{% set postNew = "posts-new" %}
+{% set postEdit = "posts-edit?" %}
+{% set postDelete = "posts-del?" %}
+
+{% block body %}
+    {% block header %}{{ include('layouts/partials/_navbar.html.twig') }}{% endblock %}
+    <!-- Page Title-->
+    {% set home = "me" %}
+    {% set post = "posts-index" %}
+    <div class="d-flex p-3" aria-label="Page title" style="margin-top: 5%; margin-bottom: 5%;">
+        <div class="container text-left align-self-center">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ home }}">Mes informations</a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="{{ post }}">Mes posts</a>
+                    </li>
+                </ol>
+            </nav>
+            <h1 class="page-title-heading"><u>Les posts</u></h1>
+        </div>
+    </div>
+    <!-- Page Content-->
+    <div class="container mb-4">
+        <div class="row">
+            {{ include('layouts/partials/_sidebar.html.twig', {'postsActiveClass': 'active'}) }}
+            <!-- Orders Table-->
+            <div class="col-lg-8 pb-5">
+                <div class="table-responsive">
+                    <a href="{{ postNew }}" class="btn btn-style-2 btn-primary">Ajouter un post</a>
+                    <table id="example" class="table table-hover mb-0">
+                        <thead>
+                        <tr>
+                            <th>Titre</th>
+                            <th>Date de publication</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for post in postsList %}
+                            <tr>
+                                <td class="text-center"><a class="navi-link" href="#" data-toggle="modal">{{ post.title }}</a></td>
+                                <td>{{ post.datePublish|date('Y-m-d H:i:s') }}</td>
+                                <td><p class="text-justify">{{ post.description|striptags|slice(0, 80)~"...." }}</p></td>
+                                <td class="text-center">
+                                    <a href="{{ postShow~"id="~post.id }}" style="text-decoration: none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                                            <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+                                            <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                                        </svg>
+                                    </a>
+                                    <a class="text-success" href="{{ postEdit~"id="~post.id }}" style="text-decoration: none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                                            <path d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
+                                        </svg>
+                                    </a>
+                                    <a class="text-danger" data-toggle="modal" href="#dangerModal{{ post.id }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                                        </svg>
+                                    </a>
+                                    <div class="modal fade" id="dangerModal{{ post.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-danger" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Confirmation de la suppression</h4>
+                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Etes-vous sûr de vouloir supprimer ce post ??</p>
+                                                </div>
+                                                <form method="post" action="{{ postDelete~"id="~post.id }}">
+                                                    <div class="modal-footer">
+                                                        <input type="hidden" name="_method" value="DELETE">
+                                                        <input type="hidden" name="_token" value="{{ _token }}">
+                                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Fermer</button>
+                                                        <button class="btn btn-danger" type="submit">Supprimer</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable({
+                "bLengthChange": false,
+                "bFilter": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json",
+                }
+            });
+        } );
+    </script>
+
+    {% block footer %}{{ include('layouts/partials/_footer.html.twig') }}{% endblock %}
+{% endblock %}

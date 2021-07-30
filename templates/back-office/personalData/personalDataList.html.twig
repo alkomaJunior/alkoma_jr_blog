@@ -1,0 +1,68 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% set heroBg = "build/img/hero-bg.png" %}
+
+{% block body %}
+    {% block header %}{{ include('layouts/partials/_navbar.html.twig') }}{% endblock %}
+    <!-- Page Title-->
+    {% set home = "me" %}
+    {% set meEdit = "me-edit?" %}
+    <div class="d-flex p-3" aria-label="Page title" style="margin-top: 5%; margin-bottom: 5%;">
+        <div class="container text-left align-self-center">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ home }}">Mes informations</a></li>
+                </ol>
+            </nav>
+            <h1 class="page-title-heading"><u>Mes informations</u></h1>
+        </div>
+    </div>
+    <!-- Page Content-->
+    <div class="container mb-4">
+        <div class="row">
+            {{ include('layouts/partials/_sidebar.html.twig', {'meActiveClass': 'active'}) }}
+            <!-- Orders Table-->
+            <div class="col-lg-8 pb-5 text-justify">
+                <div class="btn btn-style-3 btn-primary">
+                    <i class="fe-icon-user text-xlt"></i>
+                </div>
+                <h3 class="card icon-box-title">{{ myMe.myName }}</h3>
+                <table id="example" class="table table-hover mb-0">
+                    <tbody>
+                        <tr>
+                            <td>Nom</td>
+                            <td><p class="icon-box-text">{{ myMe.occupation }}</p></td>
+                        </tr>
+                        <tr>
+                            <td>Adresse</td>
+                            <td><p class="icon-box-text">{{ myMe.address }}</p></td>
+                        </tr>
+                        <tr>
+                            <td>Téléphone</td>
+                            <td><p class="icon-box-text">{{ myMe.phoneNumber }}</p></td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td><p class="icon-box-text">{{ myMe.emailAddress }}</p></td>
+                        </tr>
+                        <tr>
+                            <td>Facebook</td>
+                            <td><p class="icon-box-text">{{ myMe.facebookLink }}</p></td>
+                        </tr>
+                        <tr>
+                            <td>Instagram</td>
+                            <td><p class="icon-box-text">{{ myMe.instagramLink }}</p></td>
+                        </tr>
+                        <tr>
+                            <td>Linkedin</td>
+                            <td><p class="icon-box-text">{{ myMe.linkedinLink }}</p></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a class="btn btn-style-6 btn-gradient" href="{{ meEdit~"id="~myMe.id }}">Modifier</a>
+            </div>
+        </div>
+    </div>
+
+    {% block footer %}{{ include('layouts/partials/_footer.html.twig') }}{% endblock %}
+{% endblock %}

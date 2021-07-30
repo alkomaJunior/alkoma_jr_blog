@@ -7,6 +7,7 @@ namespace app\src\controllers;
 use app\config\Application;
 use app\config\Controller;
 use app\src\form\MessagesType;
+use app\src\models\Me;
 use app\src\models\Messages;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -27,10 +28,7 @@ class SiteController extends Controller
 
         //form building
         $message = new Messages();
-        $messagesForm = new MessagesType($message, "", "post");
-
-        $formBody = $messagesForm->buildForm()['body'];
-        $formClose = $messagesForm->buildForm()['end'];
+        $messagesForm = (new MessagesType($message, "", "post"))->createForm();
 
         //form validation
             //check if form is submitted
@@ -43,19 +41,15 @@ class SiteController extends Controller
 
             //check if form is valid and do actions
             if ($message->isValid()){
-                echo "validate success";
+                $message->new();
+                Application::$app->flashMessage->success('Votre message a été envoyé avec succès.', '/alkoma_blog/');
             }
-            echo "google";
-            var_dump($data);
         }
 
         echo $this::twig()->render('front-office/home.html.twig', [
-            'formOpen' => $messagesForm,
-            'field1' => $formBody[0],
-            'field2' => $formBody[1],
-            'field3' => $formBody[2],
-            'field4' => $formBody[3],
-            'formClose' => $formClose,
+            'messageForm' => $messagesForm,
+            'user'        => $this::$user,
+            'me'          => (new Me())->findOne(['id' => 1]),
         ]);
     }
 
@@ -65,6 +59,9 @@ class SiteController extends Controller
      * @throws LoaderError
      */
     public function _404(){
-        echo $this::twig()->render('/errors/_404.html.twig');
+        echo $this::twig()->render('/errors/_404.html.twig', [
+            'user'        => $this::$user,
+            'me'          => (new Me())->findOne(['id' => 1]),
+        ]);
     }
 }

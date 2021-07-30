@@ -1,6 +1,8 @@
 {% extends 'layouts/base.html.twig' %}
 
 {% set heroBg = "build/img/hero-bg.png" %}
+{% set cv = "build/img/my-cv.png" %}
+{% set connexion = "connexion" %}
 
 {% block body %}
     {% block header %}{{ include('layouts/partials/_navbar.html.twig', {'homeActiveClass': 'active'}) }}{% endblock %}
@@ -21,9 +23,11 @@
                         </h1>
                         <div class="pt-3">
                             <a class="scroll-to btn btn-style-4 btn-primary mr-3 mb-3" href="#contacts" data-parallax="{&quot;y&quot; : 25}">Me contacter</a>
-                            <a class="scroll-to btn btn-style-4 btn-gradient btn-icon-right mb-3" href="#works" data-parallax="{&quot;y&quot; : -25}">
-                                <i class="fe-icon-arrow-down text-md"></i>Portfolio
+                            <a onclick="{% if user.id is not null %}window.open(this.href);{% else %}window.open(this.href); return false;{% endif %}"
+                               class="scroll-to btn btn-style-4 btn-gradient btn-icon-right mb-3 mr-3" href="{% if user.id is not null %}{{ cv }}{% else %}{{ connexion }}{% endif %}"
+                               data-parallax="{&quot;y&quot; : -25}" download> <i class="fe-icon-arrow-down text-md"></i>Mon Cv
                             </a>
+                            <a class="scroll-to btn btn-style-4 btn-primary mr-3 mb-3" href="#works" data-parallax="{&quot;y&quot; : 25}">Portfolio</a>
                         </div>
                         <div class="pt-4 pt-md-5">
                             <a class="social-btn sb-style-6 sb-facebook" href="#"><i class="socicon-facebook"></i></a>

@@ -3,11 +3,15 @@
 
 namespace app\src\models;
 
+use app\config\UserModel;
 
-use app\config\Model;
-
-class Users extends Model
+class Users extends UserModel
 {
+    const STATUS_INACTIVE = 0;
+    const STATUS_ACTIVE = 1;
+    const STATUS_DELETED = 2;
+
+    protected $id;
     protected $firstName;
     protected $lastName;
     protected $emailAddress;
@@ -15,6 +19,27 @@ class Users extends Model
     protected $password;
     protected $confirmPassword;
     protected $role;
+    protected $status;
+
+    public function tableName(): string
+    {
+        return 'users';
+    }
+
+    public function attributes(): array
+    {
+        $reflect = new \ReflectionClass($this);
+        $proprieties = $reflect->getProperties();
+
+        return [
+            $proprieties[1]->getName(),
+            $proprieties[2]->getName(),
+            $proprieties[3]->getName(),
+            $proprieties[4]->getName(),
+            $proprieties[5]->getName(),
+            $proprieties[7]->getName()
+        ];
+    }
 
     /**
      * @return mixed
@@ -128,9 +153,37 @@ class Users extends Model
         $this->confirmPassword = $confirmPassword;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
 
+    /**
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
 
+    /**
+     * @param mixed $status
+     */
+    public function setStatus($status): void
+    {
+        $this->status = $status;
+    }
 
     public function rules(): array
     {
@@ -138,12 +191,17 @@ class Users extends Model
         $proprieties = $reflect->getProperties();
 
         return [
-            $proprieties[0]->getName() => [self::RULE_REQUIRED],
             $proprieties[1]->getName() => [self::RULE_REQUIRED],
-            $proprieties[2]->getName() => [self::RULE_REQUIRED, self::RULE_EMAIL],
-            $proprieties[3]->getName() => [self::RULE_REQUIRED],
+            $proprieties[2]->getName() => [self::RULE_REQUIRED],
+            $proprieties[3]->getName() => [self::RULE_REQUIRED, self::RULE_EMAIL, [self::RULE_UNIQUE, 'class' => self::class]],
             $proprieties[4]->getName() => [self::RULE_REQUIRED],
-            $proprieties[5]->getName() => [self::RULE_REQUIRED, [self::RULE_MATCH, 'match' => $proprieties[4]->getName() ]],
+            $proprieties[5]->getName() => [self::RULE_REQUIRED],
+            $proprieties[6]->getName() => [self::RULE_REQUIRED, [self::RULE_MATCH, 'match' => $proprieties[5]->getName() ]],
         ];
+    }
+
+    public function getDisplayName(): string
+    {
+        return $this->firstName . ' ' . $this->lastName;
     }
 }
