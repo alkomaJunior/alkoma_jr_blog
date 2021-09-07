@@ -52,11 +52,24 @@ class PostsController extends Controller
     public function singlePosts(){
 
         $post = new Posts();
+        $commentByPost = new Comments();
         $myPost = $post;
         $method = "";
+        $totalOfComment = (new Comments())->numberOfModels()[0];
+        $perPage = 8;
+        $numberOfPages = ceil($totalOfComment/$perPage);
+        if (isset($_GET['page']) && $_GET['page'] > 0 && $_GET['page'] <= $numberOfPages){
+            $currentPage = $_GET['page'];
+        }
+        else{
+            $currentPage = 1;
+        }
         if (Application::$app->request->isGet(Application::$app->request->getMethod())){
             $myPost = $post->findOne(['id' => (int)$_GET['id']]);
             $method = "get";
+
+            $commentByPost = (new Comments())->findByIdPaginate(['idPosts' => $myPost->getId()], $currentPage, $perPage);
+
         }
 
         //form building
@@ -72,30 +85,44 @@ class PostsController extends Controller
             $myPost = $post->findOne(['id' => $data['id']]);
             $method = "post";
 
+            $commentByPost = (new Comments())->findByIdPaginate(['idPosts' => $myPost->getId()], $currentPage, $perPage);
+
             //hydration of the class
             $comment->loadData($data);
 
             //check if form is valid and do actions
             if ($comment->isValid()){
+                $comment->setIdUsers(Application::$app->getUser()->getId());
+                $comment->setIdPosts($myPost->getId());
+                $comment->setAuthor(Application::$app->getUser()->getFirstName().' '.Application::$app->getUser()->getLastName());
                 $comment->new();
-                Application::$app->flashMessage->success('Post commenté avec succès.', 'posts-single?id='.$data['id']);
+                Application::$app->flashMessage->success('Post commenté avec succès.', 'posts-single?id='.$myPost->getId());
             }
             else{
-                Application::$app->flashMessage->error("Votre formulaire contient des erreurs....!"/*, 'posts-single?id='.$data['id']*/);
+                Application::$app->flashMessage->error("Votre formulaire contient des erreurs....!");
                 Application::$app->flashMessage->display();
             }
         }
 
         echo $this::twig()->render('front-office/postsSingle.html.twig', [
-            'commentsForm' => $commentForm,
-            'user'         => $this::$user,
-            'me'           => (new Me())->findOne(['id' => 1]),
-            'myPost'       => $myPost,
-            'method'       => $method,
+            'commentsForm'  => $commentForm,
+            'user'          => $this::$user,
+            'me'            => (new Me())->findOne(['id' => 1]),
+            'myPost'        => $myPost,
+            'method'        => $method,
+            'commentByPost' => $commentByPost,
+            'numberOfPages' => $numberOfPages,
+            'currentPage'   => $currentPage,
+            'totalOfComment' => $totalOfComment,
 
         ]);
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     public function postsList(){
 
         (new BackOfficeProtection())->checkForAdminStatus();
@@ -148,6 +175,11 @@ class PostsController extends Controller
         ]);
     }
 
+    /**
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws LoaderError
+     */
     public function showPosts(){
 
         (new BackOfficeProtection())->checkForAdminStatus();
@@ -155,13 +187,38 @@ class PostsController extends Controller
         $post = new Posts();
         $myPost = $post->findOne(['id' => (int)$_GET['id']]);
 
+        $_token = $this::$easyCSRF->generate('comments_csrf_token');
+
+        $totalOfComment = (new Comments())->numberOfModels()[0];
+
+        $perPage = 8;
+        $numberOfPages = ceil($totalOfComment/$perPage);
+        if (isset($_GET['page']) && $_GET['page'] > 0 && $_GET['page'] <= $numberOfPages){
+            $currentPage = $_GET['page'];
+        }
+        else{
+            $currentPage = 1;
+        }
+
+        $commentByPost = (new Comments())->findByIdPaginate(['idPosts' => $myPost->getId()], $currentPage, $perPage);
+
         echo $this::twig()->render('back-office/posts/postsShow.html.twig', [
-            'myPost'      => $myPost,
-            'user'        => $this::$user,
-            'me'          => (new Me())->findOne(['id' => 1]),
+            'myPost'         => $myPost,
+            'user'           => $this::$user,
+            'me'             => (new Me())->findOne(['id' => 1]),
+            'commentByPost'  => $commentByPost,
+            'numberOfPages'  => $numberOfPages,
+            'currentPage'    => $currentPage,
+            'totalOfComment' => $totalOfComment,
+            '_token'         => $_token,
         ]);
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     public function editPosts(){
 
         (new BackOfficeProtection())->checkForAdminStatus();

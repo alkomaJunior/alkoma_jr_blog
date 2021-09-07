@@ -97,6 +97,34 @@ abstract class Repository extends Model
         return $statement->fetchObject(static::class);
     }
 
+    public function findByIdPaginate($where, $currentPage, $perPage){
+        $tableName = $this->tableName();
+        $attributes = array_keys($where);
+        $sql = implode("AND", array_map(fn($attr) => "$attr = :$attr", $attributes));
+        $statement = Application::$app->db->prepare("SELECT * FROM $tableName WHERE $sql ORDER BY datePublish DESC LIMIT ".(($currentPage-1)*$perPage).", $perPage");
+
+        foreach ($where as $key => $item) {
+            $statement->bindValue(":$key", $item);
+        }
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_OBJ);
+    }
+
+    public function findById($where){
+        $tableName = $this->tableName();
+        $attributes = array_keys($where);
+        $sql = implode("AND", array_map(fn($attr) => "$attr = :$attr", $attributes));
+        $statement = Application::$app->db->prepare("SELECT * FROM $tableName WHERE $sql");
+
+        var_dump($statement);
+
+        foreach ($where as $key => $item) {
+            $statement->bindValue(":$key", $item);
+        }
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_OBJ);
+    }
+
     public function remove($where){
         $tableName = $this->tableName();
         $attributes = array_keys($where);

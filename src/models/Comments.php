@@ -12,9 +12,10 @@ class Comments extends Repository
     protected $id;
     protected $title;
     protected $comment;
-    protected Users $users;
-    protected Posts $posts;
-    protected Posts $dateAdd;
+    protected int $idUsers;
+    protected int $idPosts;
+    protected $author;
+    protected $datePublish;
 
     /**
      * @return mixed
@@ -41,22 +42,6 @@ class Comments extends Repository
     }
 
     /**
-     * @return Posts
-     */
-    public function getPosts(): Posts
-    {
-        return $this->posts;
-    }
-
-    /**
-     * @return Users
-     */
-    public function getUsers(): Users
-    {
-        return $this->users;
-    }
-
-    /**
      * @param mixed $id
      */
     public function setId($id): void
@@ -72,13 +57,6 @@ class Comments extends Repository
         $this->comment = $comment;
     }
 
-    /**
-     * @param Posts $posts
-     */
-    public function setPosts(Posts $posts): void
-    {
-        $this->posts = $posts;
-    }
 
     /**
      * @return mixed
@@ -89,27 +67,67 @@ class Comments extends Repository
     }
 
     /**
-     * @return Posts
+     * @param mixed $datePublish
      */
-    public function getDateAdd(): Posts
+    public function setDatePublish($datePublish): void
     {
-        return $this->dateAdd;
+        $this->datePublish = $datePublish;
     }
 
     /**
-     * @param Posts $dateAdd
+     * @return mixed
      */
-    public function setDateAdd(Posts $dateAdd): void
+    public function getDatePublish()
     {
-        $this->dateAdd = $dateAdd;
+        return $this->datePublish;
     }
 
     /**
-     * @param Users $users
+     * @return int
      */
-    public function setUsers(Users $users): void
+    public function getIdPosts(): int
     {
-        $this->users = $users;
+        return $this->idPosts;
+    }
+
+    /**
+     * @param int $idPosts
+     */
+    public function setIdPosts(int $idPosts): void
+    {
+        $this->idPosts = $idPosts;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIdUsers(): int
+    {
+        return $this->idUsers;
+    }
+
+    /**
+     * @param int $idUsers
+     */
+    public function setIdUsers(int $idUsers): void
+    {
+        $this->idUsers = $idUsers;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * @param mixed $author
+     */
+    public function setAuthor($author): void
+    {
+        $this->author = $author;
     }
 
     public function rules(): array
