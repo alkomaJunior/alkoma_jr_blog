@@ -9,16 +9,37 @@ abstract class Repository extends Model
     abstract public function tableName (): string;
     abstract public function attributes (): array;
 
+    public function numberOfModels(){
+        $tableName = $this->tableName();
+        $statement = Application::$app->db->prepare("SELECT COUNT(id) as numberTotal FROM $tableName");
+        $statement->execute();
+        return $statement->fetch(\PDO::FETCH_NUM);
+    }
+
+    public function allPaginate($currentPage, $perPage){
+        $tableName = $this->tableName();
+        $statement = Application::$app->db->prepare("SELECT * FROM $tableName ORDER BY datePublish DESC LIMIT ".(($currentPage-1)*$perPage).", $perPage");
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_OBJ);
+    }
+
     public function new(){
         $tableName = $this->tableName();
         $attributes = $this->attributes();
 
+        var_dump($tableName, $attributes);
+
         //print each attributes value by using fn to define $attr variable
         $params = array_map(fn($attr) => ":$attr", $attributes);
+
+        var_dump($params);
 
         $statement = Application::$app->db->prepare("INSERT INTO $tableName (".implode(',', $attributes).")
                                         VALUES (".implode(',', $params).")
         ");
+
+        var_dump($statement);
+
         foreach ($attributes as $attribute){
             $statement->bindValue(":$attribute", $this->{$attribute});
         }

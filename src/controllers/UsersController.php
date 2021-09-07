@@ -25,6 +25,9 @@ class UsersController extends Controller
     public function registerOrLogin(){
 
         //form building for register
+        if (isset($_GET['idPost'])){
+            $idPost = $_GET['idPost'];
+        }
         $user = new Users();
         $usersRegisterForm = (new UsersType($user, "register", "post"))->createForm();
 
@@ -50,12 +53,17 @@ class UsersController extends Controller
                     $user->new();
                     Application::$app->flashMessage->success('Thanks for registration', '/alkoma_blog/');
                 }
+                else{
+                    Application::$app->flashMessage->error("Votre formulaire contient des erreurs....!");
+                    Application::$app->flashMessage->display();
+                }
             }
             else
             {
                 $auth->loadData($data);
                 $user->setEmailAddress($auth->getEmailC());
                 $user->setPassword($auth->getPasswordC());
+
 
                 if ($auth->isValid()){
 
@@ -90,6 +98,10 @@ class UsersController extends Controller
                     }
 
                     return Application::$app->login($user);
+                }
+                else{
+                    Application::$app->flashMessage->error("Votre formulaire contient des erreurs....!");
+                    Application::$app->flashMessage->display();
                 }
             }
         }
