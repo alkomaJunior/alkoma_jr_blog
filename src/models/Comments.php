@@ -14,8 +14,7 @@ class Comments extends Repository
     protected $comment;
     protected int $idUsers;
     protected int $idPosts;
-    protected Users $users;
-    protected Posts $posts;
+    protected $author;
     protected $datePublish;
 
     /**
@@ -43,22 +42,6 @@ class Comments extends Repository
     }
 
     /**
-     * @return Posts
-     */
-    public function getPosts(): Posts
-    {
-        return $this->posts;
-    }
-
-    /**
-     * @return Users
-     */
-    public function getUsers(): Users
-    {
-        return $this->users;
-    }
-
-    /**
      * @param mixed $id
      */
     public function setId($id): void
@@ -74,13 +57,6 @@ class Comments extends Repository
         $this->comment = $comment;
     }
 
-    /**
-     * @param Posts $posts
-     */
-    public function setPosts(Posts $posts): void
-    {
-        $this->posts = $posts;
-    }
 
     /**
      * @return mixed
@@ -104,14 +80,6 @@ class Comments extends Repository
     public function getDatePublish()
     {
         return $this->datePublish;
-    }
-
-    /**
-     * @param Users $users
-     */
-    public function setUsers(Users $users): void
-    {
-        $this->users = $users;
     }
 
     /**
@@ -146,6 +114,22 @@ class Comments extends Repository
         $this->idUsers = $idUsers;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * @param mixed $author
+     */
+    public function setAuthor($author): void
+    {
+        $this->author = $author;
+    }
+
     public function rules(): array
     {
         $reflect = new \ReflectionClass($this);
@@ -172,6 +156,7 @@ class Comments extends Repository
             $proprieties[2]->getName(),
             $proprieties[3]->getName(),
             $proprieties[4]->getName(),
+            $proprieties[5]->getName(),
         ];
     }
 }

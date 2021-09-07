@@ -6,7 +6,8 @@
     $dotenv->load();
 
     use app\config\Application;
-    use app\src\controllers\SiteController;
+use app\src\controllers\CommentsController;
+use app\src\controllers\SiteController;
     use app\src\controllers\PostsController;
     use app\src\controllers\PortfolioController;
     use app\src\controllers\UsersController;
@@ -28,6 +29,8 @@
     $app->router->get('/alkoma_blog/posts-edit', array(PostsController::class, 'editPosts'));
     $app->router->post('/alkoma_blog/posts-edit', array(PostsController::class, 'editPosts'));
     $app->router->post('/alkoma_blog/posts-del', array(PostsController::class, 'deletePosts'));
+
+    //$app->router->post('/alkoma_blog/comments-del', array(CommentsController::class, 'deleteComments'));
 
     $app->router->get('/alkoma_blog/portfolio', array(PortfolioController::class, 'indexPortfolio'));
 
