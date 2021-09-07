@@ -11,7 +11,7 @@ use EasyCSRF\Exceptions\InvalidCsrfTokenException;
 
 class CommentsController extends Controller
 {
-    /*public function deleteComments(){
+    public function deleteComments(){
 
         $comment = (new Comments())->findOne(['id' => (int)$_GET['id']]);
 
@@ -32,6 +32,6 @@ class CommentsController extends Controller
                 Application::$app->flashMessage->success('Commentaire supprimé avec succès.', 'posts-show?id='.$data['_postId']);
             }
         }
-    }*/
+    }
 
 }
