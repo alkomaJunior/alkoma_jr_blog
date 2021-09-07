@@ -6,7 +6,9 @@ namespace app\src\controllers;
 
 use app\config\Application;
 use app\config\Controller;
+use app\src\form\CommentsType;
 use app\src\form\PostsType;
+use app\src\models\Comments;
 use app\src\models\Me;
 use app\src\models\Posts;
 use app\src\traits\BackOfficeProtection;
@@ -23,9 +25,22 @@ class PostsController extends Controller
      * @throws LoaderError
      */
     public function indexPosts(){
+        $totalOfPosts = (new Posts())->numberOfModels()[0];
+        $perPage = 8;
+        $numberOfPages = ceil($totalOfPosts/$perPage);
+        if (isset($_GET['page']) && $_GET['page'] > 0 && $_GET['page'] <= $numberOfPages){
+            $currentPage = $_GET['page'];
+        }
+        else{
+            $currentPage = 1;
+        }
+        $posts = (new Posts())->allPaginate($currentPage, $perPage);
         echo $this::twig()->render('front-office/posts.html.twig', [
-            'user'        => $this::$user,
-            'me'          => (new Me())->findOne(['id' => 1]),
+            'user'          => $this::$user,
+            'me'            => (new Me())->findOne(['id' => 1]),
+            'posts'         => $posts,
+            'numberOfPages' => $numberOfPages,
+            'currentPage'   => $currentPage,
         ]);
     }
 
@@ -35,9 +50,49 @@ class PostsController extends Controller
      * @throws LoaderError
      */
     public function singlePosts(){
+
+        $post = new Posts();
+        $myPost = $post;
+        $method = "";
+        if (Application::$app->request->isGet(Application::$app->request->getMethod())){
+            $myPost = $post->findOne(['id' => (int)$_GET['id']]);
+            $method = "get";
+        }
+
+        //form building
+        $comment = new Comments();
+        $commentForm = (new CommentsType($comment, "posts-single", "post"))->createForm();
+
+        //form validation
+        //check if form is submitted
+        if (Application::$app->request->isPost(Application::$app->request->getMethod())){
+            //getting form data
+            $data = Application::$app->request->getRequestData();
+
+            $myPost = $post->findOne(['id' => $data['id']]);
+            $method = "post";
+
+            //hydration of the class
+            $comment->loadData($data);
+
+            //check if form is valid and do actions
+            if ($comment->isValid()){
+                $comment->new();
+                Application::$app->flashMessage->success('Post commenté avec succès.', 'posts-single?id='.$data['id']);
+            }
+            else{
+                Application::$app->flashMessage->error("Votre formulaire contient des erreurs....!"/*, 'posts-single?id='.$data['id']*/);
+                Application::$app->flashMessage->display();
+            }
+        }
+
         echo $this::twig()->render('front-office/postsSingle.html.twig', [
-            'user'        => $this::$user,
-            'me'          => (new Me())->findOne(['id' => 1]),
+            'commentsForm' => $commentForm,
+            'user'         => $this::$user,
+            'me'           => (new Me())->findOne(['id' => 1]),
+            'myPost'       => $myPost,
+            'method'       => $method,
+
         ]);
     }
 
@@ -79,6 +134,10 @@ class PostsController extends Controller
                 $post->new();
                 Application::$app->flashMessage->success('Nouveau post enregistré avec succès.', 'posts-index');
             }
+            else{
+                Application::$app->flashMessage->error("Votre formulaire contient des erreurs....!");
+                Application::$app->flashMessage->display();
+            }
         }
 
         echo $this::twig()->render('back-office/posts/postsNew.html.twig', [
@@ -116,6 +175,10 @@ class PostsController extends Controller
             if ($post->isValid()){
                 $post->edit(['id' => $post->getId()]);
                 Application::$app->flashMessage->success('Post édité avec succès.', 'posts-index');
+            }
+            else{
+                Application::$app->flashMessage->error("Votre formulaire contient des erreurs....!");
+                Application::$app->flashMessage->display();
             }
         }
 

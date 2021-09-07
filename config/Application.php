@@ -44,7 +44,7 @@ class Application
         $this->request = new Request();
 
         $this->flashMessage = new FlashMessages();
-        $this->flashMessage->setMsgWrapper("<div class='%s' style='margin-left: 250px; margin-right: 280px;'><b>%s</b></div>\n");
+        $this->flashMessage->setMsgWrapper("<div class='%s text-center' style='margin-left: 250px; margin-right: 280px; margin-top: 75px;'><b>%s</b></div>\n");
 
         $this->response = new Response();
 
@@ -103,12 +103,13 @@ class Application
         $this->controller = $controller;
     }
 
-    public function login(UserModel $user)
+    public function login(UserModel $user, $idPost): bool
     {
         $this->user = $user;
         self::$app->session->set('user', $this->user->getId());
 
         if ($this->getUser()->getRole() === "USER"){
+
             $this->response->redirect('/alkoma_blog/');
         }
         else $this->response->redirect('/alkoma_blog/me');

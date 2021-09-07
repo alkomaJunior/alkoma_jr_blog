@@ -10,9 +10,11 @@ class Comments extends Repository
 {
 
     protected $id;
+    protected $title;
     protected $comment;
     protected Users $users;
     protected Posts $posts;
+    protected Posts $dateAdd;
 
     /**
      * @return mixed
@@ -20,6 +22,14 @@ class Comments extends Repository
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @param mixed $title
+     */
+    public function setTitle($title): void
+    {
+        $this->title = $title;
     }
 
     /**
@@ -71,6 +81,30 @@ class Comments extends Repository
     }
 
     /**
+     * @return mixed
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @return Posts
+     */
+    public function getDateAdd(): Posts
+    {
+        return $this->dateAdd;
+    }
+
+    /**
+     * @param Posts $dateAdd
+     */
+    public function setDateAdd(Posts $dateAdd): void
+    {
+        $this->dateAdd = $dateAdd;
+    }
+
+    /**
      * @param Users $users
      */
     public function setUsers(Users $users): void
@@ -85,6 +119,7 @@ class Comments extends Repository
 
         return [
             $proprieties[1]->getName() => [self::RULE_REQUIRED],
+            $proprieties[2]->getName() => [self::RULE_REQUIRED],
         ];
     }
 
@@ -102,6 +137,8 @@ class Comments extends Repository
             $proprieties[1]->getName(),
             $proprieties[2]->getName(),
             $proprieties[3]->getName(),
+            $proprieties[4]->getName(),
+            $proprieties[5]->getName(),
         ];
     }
 }

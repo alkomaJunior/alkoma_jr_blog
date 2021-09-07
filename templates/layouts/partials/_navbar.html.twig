@@ -12,9 +12,9 @@
 <header class="navbar-ghost navbar-floating navbar-sticky">
     <div class="container text-center">
         {% if user.id is not null and user.role == "USER" %}
-            <a class="search-trigger" href="{{ logout }}" data-toggle="fullscreen-overlay">
-                <i class="fe-icon-log-out"></i>
-                <span>Se déconnecter</span>
+            <a class="search-trigger" href="{{ logout }}" data-toggle="tooltip" data-placement="top" title="Se déconnecter">
+                <i class="fe-icon-log-out"></i>{{ user.emailAddress }}
+                <span></span>
             </a>
         {% endif %}
         {% if user.role == "USER" or user.id is null %}
@@ -35,13 +35,17 @@
                     <div class="col-sm-6">
                         {% set home = "/alkoma_blog/" %}
                         {% set portfolio = "portfolio" %}
-                        {% set post = "posts" %}
+                        {% set post = "posts?page=1" %}
                         {% set login = "connexion" %}
                         <ul class="list-unstyled">
                             <li class="mb-0"><a class="dropdown-item lead py-2" href="{{ home }}">Accueil</a></li>
                             <li class="mb-0"><a class="dropdown-item lead py-2" href="{{ portfolio }}">Portfolio</a></li>
                             <li class="mb-0"><a class="dropdown-item lead py-2" href="{{ post }}">Blog</a></li>
-                            <li class="mb-0"><a class="dropdown-item lead py-2" href="{{ login }}">Connexion</a></li>
+                            {% if user.id is null %}
+                                <li class="mb-0"><a class="dropdown-item lead py-2" href="{{ login }}">Connexion</a></li>
+                            {% else %}
+
+                            {% endif %}
                         </ul>
                     </div>
                     <div class="col-sm-6 d-none d-sm-block pt-3">

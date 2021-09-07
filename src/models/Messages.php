@@ -44,7 +44,6 @@ class Messages extends Repository
             $proprieties[2]->getName(),
             $proprieties[3]->getName(),
             $proprieties[4]->getName(),
-            $proprieties[6]->getName(),
         ];
     }
 

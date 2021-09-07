@@ -21,6 +21,7 @@
     $app->router->get('/alkoma_blog/posts', array(PostsController::class, 'indexPosts'));
     $app->router->get('/alkoma_blog/posts-index', array(PostsController::class, 'postsList'));
     $app->router->get('/alkoma_blog/posts-single', array(PostsController::class, 'singlePosts'));
+    $app->router->post('/alkoma_blog/posts-single', array(PostsController::class, 'singlePosts'));
     $app->router->get('/alkoma_blog/posts-new', array(PostsController::class, 'newPosts'));
     $app->router->post('/alkoma_blog/posts-new', array(PostsController::class, 'newPosts'));
     $app->router->get('/alkoma_blog/posts-show', array(PostsController::class, 'showPosts'));

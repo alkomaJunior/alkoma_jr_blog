@@ -1,6 +1,8 @@
 {% extends 'layouts/base.html.twig' %}
 
 {% set heroBg = "build/img/hero-bg.png" %}
+{% set posts_link = "posts?" %}
+{% set postSingle = "posts-single?" %}
 
 {% block body %}
     {% block header %}{{ include('layouts/partials/_navbar.html.twig', {'postActiveClass': 'active'}) }}{% endblock %}
@@ -24,93 +26,46 @@
     <div class="container pb-5 mb-3">
         <div class="row">
             <!-- Blog Grid-->
-            <div class="col-lg-9">
+            <div class="col-lg-12">
                 <div class="isotope-grid cols-2">
                     <div class="gutter-sizer"></div>
                     <div class="grid-sizer"></div>
-                    <!-- Post-->
-                    <div class="grid-item">
-                        <div class="card blog-card mb-2"><a class="post-thumb" href="blog-single-carousel.html"><img src="img/blog/01.jpg" alt="Post Thumbnail"/></a>
-                            <div class="card-body">
-                                <h5 class="post-title"><a href="blog-single-carousel.html">The Real Truth About Space</a></h5>
-                                <p class="text-muted">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque...</p><a class="tag-link" href="#">Space</a><a class="tag-link" href="#">Technology</a>
-                            </div>
-                            <div class="card-footer"><a class="post-author" href="blog-single-carousel.html">
-                                    <div class="post-author-avatar"><img src="img/blog/authors/th01.jpg" alt="Post Author"/>
+                    {% for post in posts %}
+                        <!-- Post-->
+                        <div class="grid-item">
+                            <div class="card blog-card mb-2">
+                                <a class="post-thumb" href="{{ postSingle~"id="~post.id }}">
+                                    <img src="#" alt="Post Thumbnail"/>
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="post-title"><a href="{{ postSingle~"id="~post.id }}">{{ post.title }}</a></h5>
+                                    <p class="text-muted">
+                                        {{ post.description|striptags|slice(0, 140)~"...." }}
+                                    </p>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="post-meta"><a href="{{ postsSingle~"id="~post.id }}">
+                                        <i class="fe-icon-message-square"></i>nbc</a><span><i class="fe-icon-clock"></i>{{ post.datePublish|date('Y-m-d H:i:s') }}</span>
                                     </div>
-                                    <div class="post-author-name">Sara Palson</div></a>
-                                <div class="post-meta"><a href="blog-single-carousel.html#comments"><i class="fe-icon-message-square"></i>21</a><span><i class="fe-icon-clock"></i>Sep 03, 2018</span></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    {% endfor %}
                 </div>
                 <div class="pt-2">
                     <!-- Pagination-->
-                    <nav class="pagination"><a class="prev-btn" href="#"><i class="fe-icon-chevron-left"></i>Prev</a>
+                    <nav class="pagination"><a class="prev-btn" href="{{ posts_link~"page="~(currentPage-1) }}"><i class="fe-icon-chevron-left"></i>Précédent</a>
                         <ul class="pages">
-                            <li class="d-block d-sm-none w-100">2 / 18</li>
-                            <li class="d-none d-sm-inline-block"><a href="#">1</a></li>
-                            <li class="d-none d-sm-inline-block active"><a href="#">2</a></li>
-                            <li class="d-none d-sm-inline-block"><a href="#">3</a></li>
-                            <li class="d-none d-sm-inline-block"><a href="#">4</a></li>
-                            <li class="d-none d-sm-inline-block"><a href="#">5</a></li>
-                            <li class="d-none d-sm-inline-block">...</li>
-                            <li class="d-none d-sm-inline-block"><a href="#">18</a></li>
-                        </ul><a class="next-btn" href="#">Next<i class="fe-icon-chevron-right"></i></a>
+                            {% for i in 1..numberOfPages %}
+                                {% if i == currentPage %}
+                                    <li class="d-none d-sm-inline-block active"><a href="{{ posts_link~"page="~i }}">{{ i }}</a></li>
+                                {% else %}
+                                    <li class="d-none d-sm-inline-block"><a href="{{ posts_link~"page="~i }}">{{ i }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul><a class="next-btn" href="{{ posts_link~"page="~(currentPage+1) }}">Suivant<i class="fe-icon-chevron-right"></i></a>
                     </nav>
                 </div>
-            </div>
-            <div class="col-lg-3">
-                <!-- Blog Sidebar-->
-                <!-- Off-Canvas Toggle--><a class="offcanvas-toggle" href="#blog-sidebar" data-toggle="offcanvas"><i class="fe-icon-sidebar"></i></a>
-                <!-- Off-Canvas Container-->
-                <aside class="offcanvas-container" id="blog-sidebar">
-                    <div class="offcanvas-scrollable-area px-4 pt-5 px-lg-0 pt-lg-0"><span class="offcanvas-close"><i class="fe-icon-x"></i></span>
-                        <!-- Categories-->
-                        <div class="widget widget-categories">
-                            <h4 class="widget-title">Categories</h4>
-                            <ul>
-                                <li><a href="#technology" data-toggle="collapse">Software &amp; Technology<span>&nbsp;(45)</span></a>
-                                    <div class="collapse show" id="technology">
-                                        <ul>
-                                            <li><a href="#">Gadgets reviews<span>&nbsp;(22)</span></a></li>
-                                            <li><a href="#">Robotics &amp; AI<span>&nbsp;(10)</span></a></li>
-                                            <li><a href="#">Technological trends<span>&nbsp;(13)</span></a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- Recent Posts-->
-                        <div class="widget widget-featured-posts-carousel">
-                            <h4 class="widget-title">Recent posts</h4>
-                            <div style="margin-bottom: 10%" class="owl-carousel" data-owl-carousel="{ &quot;nav&quot;: false, &quot;dots&quot;: true, &quot;margin&quot;: 10, &quot;loop&quot;: true }">
-                                <a class="featured-post" href="#">
-                                    <div class="featured-post-thumb">
-                                        <img src="#" alt="Post Thumbnail"/>
-                                    </div>
-                                    <div class="featured-post-info">
-                                        <div class="featured-post-meta">
-                                            <span class="text-primary opacity-70"><i class="fe-icon-clock">
-                                                </i>22/04/2018</span><span class="ml-3"><i class="fe-icon-message-square"></i>21
-                                            </span>
-                                        </div>
-                                        <div class="featured-post-title">Getting to another level of design and functionality.</div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- Recent Comments-->
-                        <div class="widget widget-recent-comments">
-                            <h4 class="widget-title">Recent comments</h4>
-                            <a class="recent-comment" href="#"><span class="recent-comment-meta">Jane Portman on</span>
-                                <div class="recent-comment-title">
-                                    The App of The Future
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </aside>
             </div>
         </div>
     </div>

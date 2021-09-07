@@ -41,6 +41,10 @@ class PersonalDataController extends Controller
                 $me->edit(['id' => $me->getId()]);
                 Application::$app->flashMessage->success('Informations éditées avec succès.', 'me');
             }
+            else{
+                Application::$app->flashMessage->error("Votre formulaire contient des erreurs....!");
+                Application::$app->flashMessage->display();
+            }
         }
 
         echo $this::twig()->render('back-office/personalData/meEdit.html.twig', [

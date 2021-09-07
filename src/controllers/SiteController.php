@@ -44,6 +44,10 @@ class SiteController extends Controller
                 $message->new();
                 Application::$app->flashMessage->success('Votre message a été envoyé avec succès.', '/alkoma_blog/');
             }
+            else{
+                Application::$app->flashMessage->error("Votre formulaire contient des erreurs....!");
+                Application::$app->flashMessage->display();
+            }
         }
 
         echo $this::twig()->render('front-office/home.html.twig', [

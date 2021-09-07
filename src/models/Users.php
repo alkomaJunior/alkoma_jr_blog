@@ -7,9 +7,6 @@ use app\config\UserModel;
 
 class Users extends UserModel
 {
-    const STATUS_INACTIVE = 0;
-    const STATUS_ACTIVE = 1;
-    const STATUS_DELETED = 2;
 
     protected $id;
     protected $firstName;
@@ -19,7 +16,6 @@ class Users extends UserModel
     protected $password;
     protected $confirmPassword;
     protected $role;
-    protected $status;
 
     public function tableName(): string
     {
@@ -167,22 +163,6 @@ class Users extends UserModel
     public function setId($id): void
     {
         $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * @param mixed $status
-     */
-    public function setStatus($status): void
-    {
-        $this->status = $status;
     }
 
     public function rules(): array
