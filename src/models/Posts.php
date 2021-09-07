@@ -12,6 +12,7 @@ class Posts extends Repository
     protected $title;
     protected $description;
     protected $datePublish;
+    protected $caption;
 
     /**
      * @return mixed
@@ -77,6 +78,22 @@ class Posts extends Repository
         $this->description = $description;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getCaption()
+    {
+        return $this->caption;
+    }
+
+    /**
+     * @param mixed $caption
+     */
+    public function setCaption($caption): void
+    {
+        $this->caption = $caption;
+    }
+
     public function rules(): array
     {
         $reflect = new \ReflectionClass($this);
@@ -99,6 +116,7 @@ class Posts extends Repository
         $proprieties = $reflect->getProperties();
 
         return [
+            $proprieties[4]->getName(),
             $proprieties[1]->getName(),
             $proprieties[2]->getName(),
         ];

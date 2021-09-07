@@ -2,6 +2,8 @@
 
 {% set heroBg = "build/img/hero-bg.png" %}
 
+{% set commentDelete = "comments-del?" %}
+
 {% block body %}
     {% block header %}{{ include('layouts/partials/_navbar.html.twig') }}{% endblock %}
     <!-- Page Title-->
@@ -25,12 +27,78 @@
             {{ include('layouts/partials/_sidebar.html.twig', {'postsActiveClass': 'active'}) }}
             <!-- description -->
             <div class="col-lg-8 pb-5">
-                <div class="product-meta"><i class="fe-icon-watch"></i><span>{{ myPost.datePublish|date('Y-m-d H:i:s') }}</span></div>
+                <div class="product-meta"><i class="fe-icon-watch"></i><span>{{ myPost.datePublish|date('Y-m-d à H:i:s') }}</span></div>
+                <p class="text-muted text-justify">
+                    {{ myPost.caption }}
+                </p>
                 <h2 class="h3 font-weight-bold">{{ myPost.title }}</h2>
                 <p class="text-muted text-justify">
                     {{ myPost.description }}
                 </p>
             </div>
+        </div>
+    </div>
+    <div class="container pb-4">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4 class="text-center pb-3">{{ totalOfComment }} Commentaires</h4>
+                {% for comment in commentByPost %}
+                    <div class="blockquote comment mb-4">
+                        <p>
+                            {{ comment.comment }}
+                        </p>
+                        <div class="d-sm-flex justify-content-between align-items-center">
+                            <div class="testimonial-footer">
+                                <div class="d-table-cell align-middle pl-2">
+                                    <div class="blockquote-footer">{{ comment.author }}
+                                        <cite>{{ comment.datePublish|date('Y-m-d à H:i:s') }}</cite>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pt-3"><a class="btn btn-danger btn-sm" data-toggle="modal" href="#dangerModal{{ comment.id }}"><i class="fe-icon-delete"></i>&nbsp;Supprimer</a></div>
+
+                            <div class="modal fade" id="dangerModal{{ comment.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-danger" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Confirmation de la suppression</h4>
+                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Etes-vous sûr de vouloir supprimer ce commentaires ??</p>
+                                        </div>
+                                        <form method="post" action="{{ commentDelete~"id="~comment.id }}">
+                                            <div class="modal-footer">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <input type="hidden" name="_token" value="{{ _token }}">
+                                                <input type="hidden" name="_postId" value="{{ myPost.id }}">
+                                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Fermer</button>
+                                                <button class="btn btn-danger" type="submit">Supprimer</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="pt-2">
+            <!-- Pagination-->
+            <nav class="pagination"><a class="prev-btn" href="{{ postShow~"id="~myPost.id~"&page="~(currentPage-1) }}"><i class="fe-icon-chevron-left"></i>Précédent</a>
+                <ul class="pages">
+                    {% for i in 1..numberOfPages %}
+                        {% if i == currentPage %}
+                            <li class="d-none d-sm-inline-block active"><a href="{{ postShow~"id="~myPost.id~"&page="~i }}">{{ i }}</a></li>
+                        {% else %}
+                            <li class="d-none d-sm-inline-block"><a href="{{ postShow~"id="~myPost.id~"&page="~i }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                </ul><a class="next-btn" href="{{ postShow~"id="~myPost.id~"&page="~(currentPage+1) }}">Suivant<i class="fe-icon-chevron-right"></i></a>
+            </nav>
         </div>
     </div>
 
