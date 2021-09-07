@@ -57,6 +57,9 @@ class PostsController extends Controller
         if (Application::$app->request->isGet(Application::$app->request->getMethod())){
             $myPost = $post->findOne(['id' => (int)$_GET['id']]);
             $method = "get";
+
+            $commentByPost = (new Comments())->findById(['idPosts' => $myPost->getId()]);
+            var_dump($commentByPost);
         }
 
         //form building
@@ -72,16 +75,21 @@ class PostsController extends Controller
             $myPost = $post->findOne(['id' => $data['id']]);
             $method = "post";
 
+            $commentByPost = (new Comments())->findById(['idPosts' => $myPost->getId()]);
+            var_dump($commentByPost);
+
             //hydration of the class
             $comment->loadData($data);
 
             //check if form is valid and do actions
             if ($comment->isValid()){
+                $comment->setIdUsers(Application::$app->getUser()->getId());
+                $comment->setIdPosts($myPost->getId());
                 $comment->new();
-                Application::$app->flashMessage->success('Post commenté avec succès.', 'posts-single?id='.$data['id']);
+                Application::$app->flashMessage->success('Post commenté avec succès.', 'posts-single?id='.$myPost->getId());
             }
             else{
-                Application::$app->flashMessage->error("Votre formulaire contient des erreurs....!"/*, 'posts-single?id='.$data['id']*/);
+                Application::$app->flashMessage->error("Votre formulaire contient des erreurs....!");
                 Application::$app->flashMessage->display();
             }
         }

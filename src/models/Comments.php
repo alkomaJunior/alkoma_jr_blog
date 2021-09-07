@@ -12,9 +12,11 @@ class Comments extends Repository
     protected $id;
     protected $title;
     protected $comment;
+    protected int $idUsers;
+    protected int $idPosts;
     protected Users $users;
     protected Posts $posts;
-    protected Posts $dateAdd;
+    protected $datePublish;
 
     /**
      * @return mixed
@@ -89,19 +91,19 @@ class Comments extends Repository
     }
 
     /**
-     * @return Posts
+     * @param mixed $datePublish
      */
-    public function getDateAdd(): Posts
+    public function setDatePublish($datePublish): void
     {
-        return $this->dateAdd;
+        $this->datePublish = $datePublish;
     }
 
     /**
-     * @param Posts $dateAdd
+     * @return mixed
      */
-    public function setDateAdd(Posts $dateAdd): void
+    public function getDatePublish()
     {
-        $this->dateAdd = $dateAdd;
+        return $this->datePublish;
     }
 
     /**
@@ -110,6 +112,38 @@ class Comments extends Repository
     public function setUsers(Users $users): void
     {
         $this->users = $users;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIdPosts(): int
+    {
+        return $this->idPosts;
+    }
+
+    /**
+     * @param int $idPosts
+     */
+    public function setIdPosts(int $idPosts): void
+    {
+        $this->idPosts = $idPosts;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIdUsers(): int
+    {
+        return $this->idUsers;
+    }
+
+    /**
+     * @param int $idUsers
+     */
+    public function setIdUsers(int $idUsers): void
+    {
+        $this->idUsers = $idUsers;
     }
 
     public function rules(): array
@@ -138,7 +172,6 @@ class Comments extends Repository
             $proprieties[2]->getName(),
             $proprieties[3]->getName(),
             $proprieties[4]->getName(),
-            $proprieties[5]->getName(),
         ];
     }
 }
