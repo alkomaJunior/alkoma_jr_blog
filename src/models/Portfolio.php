@@ -7,6 +7,7 @@ use app\config\Repository;
 class Portfolio extends Repository
 {
     protected $id;
+    protected $title;
     protected $client;
     protected $objective;
     protected $description;
@@ -18,6 +19,14 @@ class Portfolio extends Repository
     public function setId($id): void
     {
         $this->id = $id;
+    }
+
+    /**
+     * @param mixed $title
+     */
+    public function setTitle($title): void
+    {
+        $this->title = $title;
     }
 
     /**
@@ -63,6 +72,14 @@ class Portfolio extends Repository
     /**
      * @return mixed
      */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getClient()
     {
         return $this->client;
@@ -101,6 +118,7 @@ class Portfolio extends Repository
             $proprieties[1]->getName() => [self::RULE_REQUIRED],
             $proprieties[2]->getName() => [self::RULE_REQUIRED],
             $proprieties[3]->getName() => [self::RULE_REQUIRED],
+            $proprieties[4]->getName() => [self::RULE_REQUIRED],
         ];
     }
 
@@ -118,6 +136,7 @@ class Portfolio extends Repository
             $proprieties[1]->getName(),
             $proprieties[2]->getName(),
             $proprieties[3]->getName(),
+            $proprieties[4]->getName(),
         ];
     }
 }
