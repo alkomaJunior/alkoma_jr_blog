@@ -3,6 +3,7 @@
 {% set heroBg = "build/img/hero-bg.png" %}
 {% set cv = "build/img/my-cv.png" %}
 {% set connexion = "connexion" %}
+{% set portfolio = "portfolio" %}
 
 {% block body %}
     {% block header %}{{ include('layouts/partials/_navbar.html.twig', {'homeActiveClass': 'active'}) }}{% endblock %}
@@ -116,13 +117,12 @@
                 <div class="col-md-4 col-sm-6 mb-30">
                     <div class="portfolio-card"><a class="portfolio-thumb" href="#"><img src="#" alt="Portfolio Thumbnail"/></a>
                         <div class="portfolio-card-body">
-                            <div class="portfolio-meta"><a href="#"><i class="fe-icon-heart text-accent"></i>12</a></div>
-                            <h5 class="portfolio-title"><a href="#">iOS App UI Design</a></h5><a class="tag-link" href="#">Mobile Apps</a>
+                            <h5 class="portfolio-title"><a href="#">iOS App UI Design</a></h5>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="text-center pt-2"><a class="btn btn-style-4 btn-gradient btn-icon-right" href="#"><i class="fe-icon-arrow-right text-md"></i>Voir plus</a></div>
+            <div class="text-center pt-2"><a class="btn btn-style-4 btn-gradient btn-icon-right" href="{{ portfolio }}"><i class="fe-icon-arrow-right text-md"></i>Voir plus</a></div>
         </div>
     </section>
     <!-- Contacts-->
