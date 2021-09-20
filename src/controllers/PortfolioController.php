@@ -36,8 +36,8 @@ class PortfolioController extends Controller
             'user'              => $this::$user,
             'me'                => (new Me())->findOne(['id' => 1]),
             'portfolio'         => twig_escape_filter($this::twig(), $portfolio, 'html'),
-            'numberOfPages'     => htmlspecialchars($numberOfPages),
-            'currentPage'       => htmlspecialchars($currentPage),
+            'numberOfPages'     => addslashes($numberOfPages),
+            'currentPage'       => addslashes($currentPage),
         ]);
     }
 
