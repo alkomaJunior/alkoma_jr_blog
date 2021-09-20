@@ -12,7 +12,7 @@ class Request
     public function getPath(){
         $path = filter_input(INPUT_SERVER, 'REQUEST_URI') ?? '/';
         if (isset($path)){
-            $position = strpos(stripslashes($path), '?');
+            $position = strpos($path, '?');
             if ($position === false){
                 return $path;
             }
@@ -56,13 +56,11 @@ class Request
             }
         }
 
-        if (isset($_POST) && $this->isPost($this->getMethod())){
-            foreach ($_POST as $key => $value){
+        if (isset($dataPostType) && $this->isPost($this->getMethod())){
+            foreach ($dataPostType as $key => $value){
                 $requestData[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             }
         }
-
-
 
         return $requestData;
     }

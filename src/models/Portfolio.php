@@ -6,7 +6,7 @@ use app\config\Repository;
 
 class Portfolio extends Repository
 {
-    protected $id;
+    protected $id_;
     protected $title;
     protected $client;
     protected $objective;
@@ -14,11 +14,11 @@ class Portfolio extends Repository
     protected $datePublish;
 
     /**
-     * @param mixed $id
+     * @param mixed $id_
      */
-    public function setId($id): void
+    public function setId($id_): void
     {
-        $this->id = $id;
+        $this->id_ = $id_;
     }
 
     /**
@@ -66,7 +66,7 @@ class Portfolio extends Repository
      */
     public function getId()
     {
-        return $this->id;
+        return $this->id_;
     }
 
     /**
