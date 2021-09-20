@@ -30,7 +30,7 @@ class PortfolioController extends Controller
             $currentPage = 1;
         }
 
-        echo $this::twig()->render('front-office/portfolio.html.twig', [
+        return $this::twig()->render('front-office/portfolio.html.twig', [
             'user'              => $this::$user,
             'me'                => (new Me())->findOne(['id' => 1]),
             'portfolio'         => (new Portfolio())->allPaginate($currentPage, $perPage),
@@ -49,7 +49,7 @@ class PortfolioController extends Controller
 
         $portfolio = new Portfolio();
 
-        echo $this::twig()->render('front-office/portfolioSingle.html.twig', [
+        return $this::twig()->render('front-office/portfolioSingle.html.twig', [
             'user'                => $this::$user,
             'me'                  => (new Me())->findOne(['id' => 1]),
             'myPortfolio'         => $portfolio->findOne(['id' => filter_input(INPUT_GET, 'id')]),
