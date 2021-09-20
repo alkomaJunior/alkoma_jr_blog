@@ -47,17 +47,19 @@ class Request
     {
         $requestData = [];
 
-        if ($this->isGet($this->getMethod())){
+        if (!isset($_GET) && $this->isGet($this->getMethod())){
             foreach ($_GET as $key => $value){
                 $requestData[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             }
         }
 
-        if ($this->isPost($this->getMethod())){
+        if (!isset($_POST) && $this->isPost($this->getMethod())){
             foreach ($_POST as $key => $value){
                 $requestData[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             }
         }
+
+
 
         return $requestData;
     }

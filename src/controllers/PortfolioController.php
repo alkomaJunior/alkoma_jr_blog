@@ -45,7 +45,8 @@ class PortfolioController extends Controller
      * @throws RuntimeError
      * @throws LoaderError
      */
-    public function singlePortfolio(){
+    public function singlePortfolio(): string
+    {
 
         $portfolio = new Portfolio();
 
