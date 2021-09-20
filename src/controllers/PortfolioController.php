@@ -30,14 +30,12 @@ class PortfolioController extends Controller
             $currentPage = 1;
         }
 
-        $portfolio = (new Portfolio())->allPaginate($currentPage, $perPage);
-
         echo $this::twig()->render('front-office/portfolio.html.twig', [
             'user'              => $this::$user,
             'me'                => (new Me())->findOne(['id' => 1]),
-            'portfolio'         => twig_escape_filter($this::twig(), $portfolio, 'html'),
-            'numberOfPages'     => addslashes($numberOfPages),
-            'currentPage'       => addslashes($currentPage),
+            'portfolio'         => (new Portfolio())->allPaginate($currentPage, $perPage),
+            'numberOfPages'     => $numberOfPages,
+            'currentPage'       => $currentPage,
         ]);
     }
 
@@ -50,15 +48,12 @@ class PortfolioController extends Controller
     public function singlePortfolio(){
 
         $portfolio = new Portfolio();
-        $myPortfolio = $portfolio->findOne(['id' => filter_input(INPUT_GET, 'id')]);
 
-        print_r(
-            $this::twig()->render('front-office/portfolioSingle.html.twig', [
+        echo $this::twig()->render('front-office/portfolioSingle.html.twig', [
             'user'                => $this::$user,
             'me'                  => (new Me())->findOne(['id' => 1]),
-            'myPortfolio'         => twig_escape_filter($this::twig(), $myPortfolio, 'html'),
-            ])
-        );
+            'myPortfolio'         => $portfolio->findOne(['id' => filter_input(INPUT_GET, 'id')]),
+        ]);
     }
 
 }
