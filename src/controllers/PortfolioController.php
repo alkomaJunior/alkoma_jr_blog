@@ -22,21 +22,22 @@ class PortfolioController extends Controller
 
         $totalOfPortfolio = (new Portfolio())->numberOfModels()[0];
         $perPage = 2;
-        $currentPage = filter_input(INPUT_GET, 'page');
         $numberOfPages = ceil($totalOfPortfolio/$perPage);
-        if (isset($currentPage) && $currentPage > 0 && $currentPage <= $numberOfPages){
-            $currentPage = filter_input(INPUT_GET, 'page');
-        }
-        else{
+
+        $currentPage = filter_input(INPUT_GET, 'page');
+
+        if (!isset($currentPage) && !($currentPage > 0) && !($currentPage <= $numberOfPages)){
             $currentPage = 1;
         }
+
         $portfolio = (new Portfolio())->allPaginate($currentPage, $perPage);
+
         echo $this::twig()->render('front-office/portfolio.html.twig', [
-            'user'          => $this::$user,
-            'me'            => (new Me())->findOne(['id' => 1]),
-            'portfolio'         => $portfolio,
-            'numberOfPages' => $numberOfPages,
-            'currentPage'   => $currentPage,
+            'user'              => $this::$user,
+            'me'                => (new Me())->findOne(['id' => 1]),
+            'portfolio'         => twig_escape_filter($this::twig(), $portfolio, 'html'),
+            'numberOfPages'     => twig_escape_filter($this::twig(), $numberOfPages, 'html'),
+            'currentPage'       => twig_escape_filter($this::twig(), $currentPage, 'html'),
         ]);
     }
 
@@ -47,14 +48,17 @@ class PortfolioController extends Controller
      * @throws LoaderError
      */
     public function singlePortfolio(){
-        $portfolio = new Portfolio();
-        $myPortfolio = $portfolio->findOne(['id' => $_GET['id']]);
 
-        echo $this::twig()->render('front-office/portfolioSingle.html.twig', [
-            'user'          => $this::$user,
-            'me'            => (new Me())->findOne(['id' => 1]),
-            'myPortfolio'         => $myPortfolio,
-        ]);
+        $portfolio = new Portfolio();
+        $myPortfolio = $portfolio->findOne(['id' => filter_input(INPUT_GET, 'id')]);
+
+        print_r(
+            $this::twig()->render('front-office/portfolioSingle.html.twig', [
+            'user'                => $this::$user,
+            'me'                  => (new Me())->findOne(['id' => 1]),
+            'myPortfolio'         => twig_escape_filter($this::twig(), $myPortfolio, 'html'),
+            ])
+        );
     }
 
 }
