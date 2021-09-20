@@ -116,8 +116,6 @@ abstract class Repository extends Model
         $sql = implode("AND", array_map(fn($attr) => "$attr = :$attr", $attributes));
         $statement = Application::$app->db->prepare("SELECT * FROM $tableName WHERE $sql");
 
-        var_dump($statement);
-
         foreach ($where as $key => $item) {
             $statement->bindValue(":$key", $item);
         }

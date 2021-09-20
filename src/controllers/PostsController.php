@@ -26,7 +26,7 @@ class PostsController extends Controller
      */
     public function indexPosts(){
         $totalOfPosts = (new Posts())->numberOfModels()[0];
-        $perPage = 8;
+        $perPage = 1;
         $numberOfPages = ceil($totalOfPosts/$perPage);
         if (isset($_GET['page']) && $_GET['page'] > 0 && $_GET['page'] <= $numberOfPages){
             $currentPage = $_GET['page'];

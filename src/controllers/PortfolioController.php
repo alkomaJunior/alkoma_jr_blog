@@ -21,10 +21,11 @@ class PortfolioController extends Controller
     public function indexPortfolio(){
 
         $totalOfPortfolio = (new Portfolio())->numberOfModels()[0];
-        $perPage = 8;
+        $perPage = 2;
+        $currentPage = filter_input(INPUT_GET, 'page');
         $numberOfPages = ceil($totalOfPortfolio/$perPage);
-        if (isset($_GET['page']) && $_GET['page'] > 0 && $_GET['page'] <= $numberOfPages){
-            $currentPage = $_GET['page'];
+        if (isset($currentPage) && $currentPage > 0 && $currentPage <= $numberOfPages){
+            $currentPage = filter_input(INPUT_GET, 'page');
         }
         else{
             $currentPage = 1;
@@ -36,6 +37,23 @@ class PortfolioController extends Controller
             'portfolio'         => $portfolio,
             'numberOfPages' => $numberOfPages,
             'currentPage'   => $currentPage,
+        ]);
+    }
+
+
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
+    public function singlePortfolio(){
+        $portfolio = new Portfolio();
+        $myPortfolio = $portfolio->findOne(['id' => $_GET['id']]);
+
+        echo $this::twig()->render('front-office/portfolioSingle.html.twig', [
+            'user'          => $this::$user,
+            'me'            => (new Me())->findOne(['id' => 1]),
+            'myPortfolio'         => $myPortfolio,
         ]);
     }
 

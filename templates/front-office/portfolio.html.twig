@@ -2,6 +2,7 @@
 
 {% set heroBg = "build/img/hero-bg.png" %}
 {% set portfolio_link = "portfolio?" %}
+{% set portfolioSingle = "portfolio-single?" %}
 
 {% block body %}
     {% block header %}{{ include('layouts/partials/_navbar.html.twig', {'postActiveClass': 'active'}) }}{% endblock %}
@@ -26,20 +27,20 @@
             <div class="gutter-sizer"></div>
             <div class="grid-sizer"></div>
             <!-- Portfolio Item-->
-            <div class="grid-item mobile-apps mb-30">
-                {% for p in portfolio %}
-                    <div class="portfolio-card">
-                        <a class="portfolio-thumb" href="#">
-                            <img src="#" alt="Portfolio Thumbnail"/>
-                        </a>
-                        <div class="portfolio-card-body">
-                            <div class="portfolio-meta">
-                                <span class="mr-3"><i class="fe-icon-user"></i>{{ p.client }}</span>
-                            </div>
+            {% for p in portfolio %}
+                <div class="grid-item mobile-apps mb-30">
+                <div class="portfolio-card">
+                    <a class="portfolio-thumb" href="{{ portfolioSingle~"id="~p.id }}">
+                        <img src="#" alt="Portfolio Thumbnail"/>
+                    </a>
+                    <div class="portfolio-card-body">
+                        <div class="portfolio-meta">
+                            <span class="mr-3"><i class="fe-icon-user"></i>{{ p.client }}</span>
                         </div>
                     </div>
-                {% endfor %}
+                </div>
             </div>
+            {% endfor %}
         </div>
         <div class="pt-2">
             <!-- Pagination-->
