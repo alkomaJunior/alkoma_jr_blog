@@ -240,7 +240,7 @@ class PostsController extends Controller
             }
         }
 
-        echo $this::twig()->render('back-office/posts/postsNew.html.twig', [
+        echo $this::twig()->render('back-office/posts/postsEdit.html.twig', [
             'postsForm'   => $postsForm,
             'user'        => $this::$user,
             'request'     => 'edit',

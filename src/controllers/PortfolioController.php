@@ -137,4 +137,38 @@ class PortfolioController extends Controller
         ]);
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
+    public function editPortfolio(){
+
+        (new BackOfficeProtection())->checkForAdminStatus();
+
+        $portfolio = (new Portfolio())->findOne(['id' => (int)$_GET['id']]);
+        $portfolioForm = (new PortfolioType($portfolio, "portfolio-edit?id=".(int)$_GET['id']."", "post"))->createForm();
+
+        if (Application::$app->request->isPost(Application::$app->request->getMethod())){
+            $data = Application::$app->request->getRequestData();
+            $portfolio->loadData($data);
+            if ($portfolio->isValid()){
+                $portfolio->edit(['id' => $portfolio->getId()]);
+                Application::$app->flashMessage->success('Projet édité avec succès.', 'portfolio-index');
+            }
+            else{
+                Application::$app->flashMessage->error("Votre formulaire contient des erreurs....!");
+                Application::$app->flashMessage->display();
+            }
+        }
+
+        echo $this::twig()->render('back-office/portfolio/portfolioEdit.html.twig', [
+            'portfolioForm'   => $portfolioForm,
+            'user'            => $this::$user,
+            'request'         => 'edit',
+            'me'              => (new Me())->findOne(['id' => 1]),
+        ]);
+
+    }
+
 }
