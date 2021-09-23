@@ -35,7 +35,7 @@
                         <div class="grid-item">
                             <div class="card blog-card mb-2">
                                 <a class="post-thumb" href="{{ postSingle~"id="~post.id }}">
-                                    <img src="#" alt="Post Thumbnail"/>
+                                    <img src="{{ "public/build/img/"~post.image~".jpg" }}" alt="Post Thumbnail"/>
                                 </a>
                                 <div class="card-body">
                                     <h5 class="post-title"><a href="{{ postSingle~"id="~post.id }}">{{ post.title }}</a></h5>

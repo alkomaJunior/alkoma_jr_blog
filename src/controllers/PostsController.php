@@ -26,7 +26,7 @@ class PostsController extends Controller
      */
     public function indexPosts(){
         $totalOfPosts = (new Posts())->numberOfModels()[0];
-        $perPage = 1;
+        $perPage = 8;
         $numberOfPages = ceil($totalOfPosts/$perPage);
         if (isset($_GET['page']) && $_GET['page'] > 0 && $_GET['page'] <= $numberOfPages){
             $currentPage = $_GET['page'];
@@ -158,6 +158,7 @@ class PostsController extends Controller
 
             //check if form is valid and do actions
             if ($post->isValid()){
+                $post->setImage(rand(1, 9));
                 $post->new();
                 Application::$app->flashMessage->success('Nouveau post enregistré avec succès.', 'posts-index');
             }

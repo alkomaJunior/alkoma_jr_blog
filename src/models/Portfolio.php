@@ -6,19 +6,36 @@ use app\config\Repository;
 
 class Portfolio extends Repository
 {
-    protected $id_;
+    protected $id;
     protected $title;
     protected $client;
     protected $objective;
     protected $description;
     protected $datePublish;
+    protected $image;
 
     /**
-     * @param mixed $id_
+     * @param mixed $image
      */
-    public function setId($id_): void
+    public function setImage($image): void
     {
-        $this->id_ = $id_;
+        $this->image = $image;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
     }
 
     /**
@@ -66,7 +83,7 @@ class Portfolio extends Repository
      */
     public function getId()
     {
-        return $this->id_;
+        return $this->id;
     }
 
     /**
@@ -137,6 +154,7 @@ class Portfolio extends Repository
             $proprieties[2]->getName(),
             $proprieties[3]->getName(),
             $proprieties[4]->getName(),
+            $proprieties[6]->getName(),
         ];
     }
 }

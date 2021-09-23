@@ -13,6 +13,23 @@ class Posts extends Repository
     protected $description;
     protected $datePublish;
     protected $caption;
+    protected $image;
+
+    /**
+     * @param mixed $image
+     */
+    public function setImage($image): void
+    {
+        $this->image = $image;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
 
     /**
      * @return mixed
@@ -100,6 +117,7 @@ class Posts extends Repository
         $proprieties = $reflect->getProperties();
 
         return [
+            $proprieties[4]->getName() => [self::RULE_REQUIRED],
             $proprieties[1]->getName() => [self::RULE_REQUIRED],
             $proprieties[2]->getName() => [self::RULE_REQUIRED],
         ];
@@ -119,6 +137,7 @@ class Posts extends Repository
             $proprieties[4]->getName(),
             $proprieties[1]->getName(),
             $proprieties[2]->getName(),
+            $proprieties[5]->getName(),
         ];
     }
 }

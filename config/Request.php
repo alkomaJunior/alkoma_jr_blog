@@ -47,17 +47,17 @@ class Request
     {
         $requestData = [];
 
-        $dataGetType [] = filter_input(INPUT_GET, '');
-        $dataPostType [] = filter_input(INPUT_POST, '');
+        $dataGet = $_GET;
+        $dataPost = $_POST;
 
-        if (isset($dataGetType) && $this->isGet($this->getMethod())){
-            foreach ($dataGetType as $key => $value){
+        if (isset($dataGet) && $this->isGet($this->getMethod())){
+            foreach ($dataGet as $key => $value){
                 $requestData[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             }
         }
 
-        if (isset($dataPostType) && $this->isPost($this->getMethod())){
-            foreach ($dataPostType as $key => $value){
+        if (isset($dataPost) && $this->isPost($this->getMethod())){
+            foreach ($dataPost as $key => $value){
                 $requestData[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             }
         }
