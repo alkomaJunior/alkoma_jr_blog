@@ -10,6 +10,7 @@ use app\src\form\PortfolioType;
 use app\src\models\Me;
 use app\src\models\Portfolio;
 use app\src\traits\BackOfficeProtection;
+use EasyCSRF\Exceptions\InvalidCsrfTokenException;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -169,6 +170,29 @@ class PortfolioController extends Controller
             'me'              => (new Me())->findOne(['id' => 1]),
         ]);
 
+    }
+
+    public function deletePortfolio(){
+
+        $portfolio = (new Portfolio())->findOne(['id' => (int)$_GET['id']]);
+
+        if (Application::$app->request->isPost(Application::$app->request->getMethod())){
+
+            $data = Application::$app->request->getRequestData();
+
+            if ($data['_method'] === "DELETE"){
+
+                try {
+                    $this::$easyCSRF->check('portfolio_csrf_token', $data['_token'], "", true);
+                }
+                catch (InvalidCsrfTokenException $e){
+                    Application::$app->flashMessage->error($e->getMessage(), 'portfolio-index');
+                }
+
+                $portfolio->remove(['id' => $portfolio->getId()]);
+                Application::$app->flashMessage->success('projet supprimé avec succès.', 'portfolio-index');
+            }
+        }
     }
 
 }
