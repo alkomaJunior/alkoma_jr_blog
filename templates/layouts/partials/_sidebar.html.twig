@@ -1,6 +1,7 @@
 {% set me = "me" %}
 {% set message = "messages-index" %}
 {% set posts = "posts-index" %}
+{% set portfolio = "portfolio-index" %}
 {% set logout = "logout" %}
 
 <div class="col-lg-4 pb-5">
@@ -37,6 +38,14 @@
                     <div>
                         <i class="fe-icon-anchor mr-1 text-muted"></i>
                         <div class="d-inline-block font-weight-medium text-uppercase">Mes Posts</div>
+                    </div>
+                </div>
+            </a>
+            <a class="list-group-item {{ portfolioActiveClass ?? "" }}" href="{{ portfolio }}">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <i class="fe-icon-anchor mr-1 text-muted"></i>
+                        <div class="d-inline-block font-weight-medium text-uppercase">Portfolio</div>
                     </div>
                 </div>
             </a>

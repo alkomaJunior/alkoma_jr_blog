@@ -38,7 +38,7 @@
                 <hr class="mb-4">
                 <!-- Carousel-->
                 <div class="pb-4 owl-carousel" data-owl-carousel="{ &quot;nav&quot;: true, &quot;dots&quot;: true, &quot;loop&quot;: true }">
-                    <img src="#" alt="Carousel Image"/>
+                    <img src="{{ "public/build/img/"~myPost.image~".jpg" }}" alt="Post Image"/>
                 </div>
                 <p class="pt-4">
                     {{ myPost.caption }}
@@ -51,7 +51,7 @@
                 <!-- Single Post Tags + Share-->
                 <div class="d-sm-flex justify-content-center align-items-center border-top border-bottom mb-5 py-2">
                     <div class="py-2">
-                        <a class="btn btn-gradient" href="{% if user.id is not null %}{{ cLink }}{% else %}{{ cLink_~"?idPost="~mymyPost.id }}{% endif %}">Commenter</a>
+                        <a class="btn btn-gradient" href="{% if user.id is not null %}{{ cLink }}{% else %}{{ cLink_~"?idPost="~myPost.id }}{% endif %}">Commenter</a>
                     </div>
                 </div>
             </div>

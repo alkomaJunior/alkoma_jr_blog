@@ -7,6 +7,7 @@ namespace app\src\controllers;
 use app\config\Controller;
 use app\src\models\Me;
 use app\src\models\Portfolio;
+use app\src\traits\BackOfficeProtection;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -54,6 +55,27 @@ class PortfolioController extends Controller
             'user'                => $this::$user,
             'me'                  => (new Me())->findOne(['id' => 1]),
             'myPortfolio'         => $portfolio->findOne(['id' => filter_input(INPUT_GET, 'id')]),
+        ]);
+    }
+
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
+    public function portfolioList(){
+
+        (new BackOfficeProtection())->checkForAdminStatus();
+
+        $portfolio = new Portfolio();
+        $portfolioList = $portfolio->all();
+        $_token = $this::$easyCSRF->generate('portfolio_csrf_token');
+
+        echo $this::twig()->render('back-office/portfolio/portfolioList.html.twig', [
+            'portfolioList'        => $portfolioList,
+            'user'                 => $this::$user,
+            '_token'               => $_token,
+            'me'                   => (new Me())->findOne(['id' => 1]),
         ]);
     }
 
