@@ -47,7 +47,8 @@ class Application
 
     public function __construct()
     {
-        $this->env = &$_ENV;
+
+        (isset($_ENV)) ? $this->env = &$_ENV : $this->env = null;
 
         $config = [
             'db' => [
