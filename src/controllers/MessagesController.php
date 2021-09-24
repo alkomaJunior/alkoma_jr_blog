@@ -3,15 +3,21 @@
 
 namespace app\src\controllers;
 
-
-use app\config\Application;
 use app\config\Controller;
 use app\src\models\Me;
 use app\src\models\Messages;
 use app\src\traits\BackOfficeProtection;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class MessagesController extends Controller
 {
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     public function messagesList()
     {
         (new BackOfficeProtection())->checkForAdminStatus();
@@ -25,20 +31,23 @@ class MessagesController extends Controller
         ]);
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     public function showMessages(){
 
         (new BackOfficeProtection())->checkForAdminStatus();
 
-        $message = new Messages();
-        $myMessage = $message->findOne(['id' => (int)$_GET['id']]);
+        $myMessage = (new Messages())->findOne(['id' => (int)$_GET['id']]);
 
-        $myMessage->setIsRead(1);
-        $myMessage->edit(['id' => $myMessage->getId()]);
+        $myMessage->markIsRead(['id' => $myMessage->getId()]);
 
         echo $this::twig()->render('back-office/messages/messagesShow.html.twig', [
             'myMessage'      => $myMessage,
-            'user'        => $this::$user,
-            'me'          => (new Me())->findOne(['id' => 1]),
+            'user'           => $this::$user,
+            'me'             => (new Me())->findOne(['id' => 1]),
         ]);
     }
 }

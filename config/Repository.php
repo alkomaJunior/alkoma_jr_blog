@@ -76,6 +76,25 @@ abstract class Repository extends Model
         $statement->execute();
     }
 
+    public function markIsRead($where){
+        $tableName = $this->tableName();
+        $attributes = $this->attributes();
+
+        //get the array keys
+        $wh = array_keys($where);
+
+        //print each array keys = their values by using fn to define $attr variable and separate with AND
+        $sql  = implode("AND", array_map(fn($attr) => "$attr = :$attr", $wh));
+
+        $statement = Application::$app->db->prepare("UPDATE $tableName SET isRead = 1 WHERE $sql");
+
+        foreach ($where as $key => $item){
+            $statement->bindValue(":$key", $item);
+        }
+
+        $statement->execute();
+    }
+
     public function all(): array
     {
         $tableName = $this->tableName();

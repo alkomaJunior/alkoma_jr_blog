@@ -15,6 +15,22 @@ class Portfolio extends Repository
     protected $image;
 
     /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
      * @param mixed $image
      */
     public function setImage($image): void
@@ -30,13 +46,6 @@ class Portfolio extends Repository
         return $this->image;
     }
 
-    /**
-     * @param mixed $id
-     */
-    public function setId($id): void
-    {
-        $this->id = $id;
-    }
 
     /**
      * @param mixed $title
@@ -76,14 +85,6 @@ class Portfolio extends Repository
     public function setDatePublish($datePublish): void
     {
         $this->datePublish = $datePublish;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**

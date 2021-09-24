@@ -22,10 +22,11 @@ class PortfolioController extends Controller
      * @throws RuntimeError
      * @throws LoaderError
      */
-    public function indexPortfolio(){
+    public function indexPortfolio(): string
+    {
 
         $totalOfPortfolio = (new Portfolio())->numberOfModels()[0];
-        $perPage = 2;
+        $perPage = 9;
         $numberOfPages = ceil($totalOfPortfolio/$perPage);
 
         $currentPage = filter_input(INPUT_GET, 'page');
@@ -66,7 +67,8 @@ class PortfolioController extends Controller
      * @throws RuntimeError
      * @throws LoaderError
      */
-    public function portfolioList(){
+    public function portfolioList(): string
+    {
 
         (new BackOfficeProtection())->checkForAdminStatus();
 
@@ -74,7 +76,7 @@ class PortfolioController extends Controller
         $portfolioList = $portfolio->all();
         $_token = $this::$easyCSRF->generate('portfolio_csrf_token');
 
-        echo $this::twig()->render('back-office/portfolio/portfolioList.html.twig', [
+        return $this::twig()->render('back-office/portfolio/portfolioList.html.twig', [
             'portfolioList'        => $portfolioList,
             'user'                 => $this::$user,
             '_token'               => $_token,
@@ -82,7 +84,13 @@ class PortfolioController extends Controller
         ]);
     }
 
-    public function newPortfolio(){
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
+    public function newPortfolio(): string
+    {
 
         (new BackOfficeProtection())->checkForAdminStatus();
 
@@ -105,13 +113,13 @@ class PortfolioController extends Controller
                 $portfolio->new();
                 Application::$app->flashMessage->success('Nouveau projet enregistré avec succès.', 'portfolio-index');
             }
-            else{
-                Application::$app->flashMessage->error("Votre formulaire contient des erreurs....!");
-                Application::$app->flashMessage->display();
-            }
+
+            Application::$app->flashMessage->error("Votre formulaire contient des erreurs....!");
+            Application::$app->flashMessage->display();
+
         }
 
-        echo $this::twig()->render('back-office/portfolio/portfolioNew.html.twig', [
+        return $this::twig()->render('back-office/portfolio/portfolioNew.html.twig', [
             'portfolioForm'   => $portfolioForm,
             'user'        => $this::$user,
             'request'     => 'add',
@@ -124,14 +132,15 @@ class PortfolioController extends Controller
      * @throws SyntaxError
      * @throws LoaderError
      */
-    public function showPortfolio(){
+    public function showPortfolio(): string
+    {
 
         (new BackOfficeProtection())->checkForAdminStatus();
 
         $portfolio = new Portfolio();
-        $myPortfolio = $portfolio->findOne(['id' => (int)$_GET['id']]);
+        $myPortfolio = $portfolio->findOne(['id' => filter_input(INPUT_GET, 'id')]);
 
-        echo $this::twig()->render('back-office/portfolio/portfolioShow.html.twig', [
+        return $this::twig()->render('back-office/portfolio/portfolioShow.html.twig', [
             'myPortfolio'         => $myPortfolio,
             'user'                => $this::$user,
             'me'                  => (new Me())->findOne(['id' => 1]),
@@ -143,12 +152,13 @@ class PortfolioController extends Controller
      * @throws RuntimeError
      * @throws LoaderError
      */
-    public function editPortfolio(){
+    public function editPortfolio(): string
+    {
 
         (new BackOfficeProtection())->checkForAdminStatus();
 
-        $portfolio = (new Portfolio())->findOne(['id' => (int)$_GET['id']]);
-        $portfolioForm = (new PortfolioType($portfolio, "portfolio-edit?id=".(int)$_GET['id']."", "post"))->createForm();
+        $portfolio = (new Portfolio())->findOne(['id' => filter_input(INPUT_GET, 'id')]);
+        $portfolioForm = (new PortfolioType($portfolio, "portfolio-edit?id=".filter_input(INPUT_GET, 'id')."", "post"))->createForm();
 
         if (Application::$app->request->isPost(Application::$app->request->getMethod())){
             $data = Application::$app->request->getRequestData();
@@ -157,13 +167,13 @@ class PortfolioController extends Controller
                 $portfolio->edit(['id' => $portfolio->getId()]);
                 Application::$app->flashMessage->success('Projet édité avec succès.', 'portfolio-index');
             }
-            else{
-                Application::$app->flashMessage->error("Votre formulaire contient des erreurs....!");
-                Application::$app->flashMessage->display();
-            }
+
+            Application::$app->flashMessage->error("Votre formulaire contient des erreurs....!");
+            Application::$app->flashMessage->display();
+
         }
 
-        echo $this::twig()->render('back-office/portfolio/portfolioEdit.html.twig', [
+        return $this::twig()->render('back-office/portfolio/portfolioEdit.html.twig', [
             'portfolioForm'   => $portfolioForm,
             'user'            => $this::$user,
             'request'         => 'edit',
@@ -172,9 +182,11 @@ class PortfolioController extends Controller
 
     }
 
-    public function deletePortfolio(){
+    public function deletePortfolio()
+    {
+        (new BackOfficeProtection())->checkForAdminStatus();
 
-        $portfolio = (new Portfolio())->findOne(['id' => (int)$_GET['id']]);
+        $portfolio = (new Portfolio())->findOne(['id' => filter_input(INPUT_GET, 'id')]);
 
         if (Application::$app->request->isPost(Application::$app->request->getMethod())){
 

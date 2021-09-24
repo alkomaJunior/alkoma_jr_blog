@@ -21,10 +21,10 @@
             <div class="container pb-5 bg-white mt-5">
                 <!-- Project Gallery-->
                 <div class="post-meta pb-3">
-                    <span class="text-sm ml-0"><i class="fe-icon-clock"></i>{{ comment.datePublish|date('Y-m-d à H:i:s') }}</span>
+                    <span class="text-sm ml-0"><i class="fe-icon-clock"></i>{{ myPortfolio.datePublish|date('Y-m-d à H:i:s') }}</span>
                 </div>
-                <div>
-                    <img src="#"/>
+                <div class>
+                    <img src="{{ "public/build/img/"~myPortfolio.image~".jpg" }}" width="100%" />
                 </div>
                 <!-- Project Details-->
                 <div class="row pt-4">

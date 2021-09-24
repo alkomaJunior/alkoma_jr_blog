@@ -47,8 +47,8 @@ class Request
     {
         $requestData = [];
 
-        $dataGet = $_GET;
-        $dataPost = $_POST;
+        $dataGet = filter_input_array(INPUT_GET);
+        $dataPost = filter_input_array(INPUT_POST);
 
         if (isset($dataGet) && $this->isGet($this->getMethod())){
             foreach ($dataGet as $key => $value){
