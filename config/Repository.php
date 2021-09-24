@@ -78,7 +78,6 @@ abstract class Repository extends Model
 
     public function markIsRead($where){
         $tableName = $this->tableName();
-        $attributes = $this->attributes();
 
         //get the array keys
         $wh = array_keys($where);
