@@ -29,10 +29,6 @@ abstract class Model
         }
     }
 
-    public static function r1(){
-
-    }
-
     public function isValid()
     {
         foreach ($this->rules() as $attribute => $rules){
