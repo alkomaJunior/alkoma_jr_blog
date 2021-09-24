@@ -50,7 +50,7 @@ class SiteController extends Controller
             Application::$app->flashMessage->display();
 
         }
-
+        
         return $this::twig()->render('front-office/home.html.twig', [
             'messageForm' => $messagesForm,
             'user'        => $this::$user,

@@ -72,27 +72,24 @@ class UsersController extends Controller
                         $auth->addError('emailC', 'Email ou Mot de passe incorrect');
                         $auth->addError('passwordC', 'Email ou Mot de passe incorrect');
 
-                        echo $this::twig()->render('front-office/connexion.html.twig', [
+                        return $this::twig()->render('front-office/connexion.html.twig', [
                             'usersRegisterForm' => $usersRegisterForm,
                             'authForm' => $authForm,
                             'me'          => (new Me())->findOne(['id' => 1]),
                         ]);
-
-                        return false;
                     }
+
 
                     if (!password_verify($auth->getPasswordC(), $user->getPassword())){
 
                         $auth->addError('emailC', 'Email ou Mot de passe incorrect');
                         $auth->addError('passwordC', 'Email ou Mot de passe incorrect');
 
-                        echo $this::twig()->render('front-office/connexion.html.twig', [
+                        return $this::twig()->render('front-office/connexion.html.twig', [
                             'usersRegisterForm' => $usersRegisterForm,
                             'authForm' => $authForm,
                             'me'          => (new Me())->findOne(['id' => 1]),
                         ]);
-
-                        return false;
                     }
 
                     return Application::$app->login($user);
