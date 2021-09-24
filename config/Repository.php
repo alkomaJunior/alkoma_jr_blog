@@ -27,8 +27,6 @@ abstract class Repository extends Model
         $tableName = $this->tableName();
         $attributes = $this->attributes();
 
-        var_dump($tableName, $attributes);
-
         //print each attributes value by using fn to define $attr variable
         $params = array_map(fn($attr) => ":$attr", $attributes);
 

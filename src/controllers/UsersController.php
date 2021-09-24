@@ -25,8 +25,9 @@ class UsersController extends Controller
     public function registerOrLogin(){
 
         //form building for register
-        if (isset($_GET['idPost'])){
-            $idPost = $_GET['idPost'];
+        $idPost = filter_input(INPUT_GET, 'idPost');
+        if (isset($idPost)){
+            $idPost = filter_input(INPUT_GET, 'idPost');
         }
         $user = new Users();
         $usersRegisterForm = (new UsersType($user, "register", "post"))->createForm();
@@ -53,10 +54,7 @@ class UsersController extends Controller
                     $user->new();
                     Application::$app->flashMessage->success('Thanks for registration', '/alkoma_blog/');
                 }
-                else{
-                    Application::$app->flashMessage->error("Votre formulaire contient des erreurs....!");
-                    Application::$app->flashMessage->display();
-                }
+
             }
             else
             {
@@ -99,21 +97,18 @@ class UsersController extends Controller
 
                     return Application::$app->login($user);
                 }
-                else{
-                    Application::$app->flashMessage->error("Votre formulaire contient des erreurs....!");
-                    Application::$app->flashMessage->display();
-                }
+
             }
+            Application::$app->flashMessage->error("Votre formulaire contient des erreurs....!");
+            Application::$app->flashMessage->display();
         }
 
-        echo $this::twig()->render('front-office/connexion.html.twig', [
+        return $this::twig()->render('front-office/connexion.html.twig', [
             'usersRegisterForm' => $usersRegisterForm,
             'authForm' => $authForm,
             'user'        => $this::$user,
             'me'          => (new Me())->findOne(['id' => 1]),
         ]);
-
-        return "";
     }
 
     public function logout(){

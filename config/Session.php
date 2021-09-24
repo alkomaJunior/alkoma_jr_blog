@@ -17,16 +17,19 @@ class Session
 
     public function set($key, $value)
     {
-        $_SESSION[$key] = $value;
+        $session = filter_var_array($_SESSION);
+        $session[$key] = $value;
     }
 
     public function get($key)
     {
-        return $_SESSION[$key] ?? false;
+        $session = filter_var_array($_SESSION);
+        return $session[$key] ?? false;
     }
 
     public function remove($key)
     {
-        unset($_SESSION[$key]);
+        $session = filter_var_array($_SESSION);
+        unset($session[$key]);
     }
 }

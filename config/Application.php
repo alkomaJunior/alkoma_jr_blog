@@ -4,6 +4,9 @@ namespace app\config;
 
 use app\src\models\Users;
 use Plasticbrain\FlashMessages\FlashMessages;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /**
  * Class Application
@@ -62,15 +65,22 @@ class Application
         }
     }
 
+    /**
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws LoaderError
+     */
     public function run()
     {
         $this->triggerEvent(self::EVENT_BEFORE_REQUEST);
         try {
-            echo $this->router->resolve();
+            $router = $this->router->resolve();
+            echo  $router;
         } catch (\Exception $e) {
-            echo $this->controller::twig()->render('', [
+            $controller = $this->controller::twig()->render('', [
                 'exception' => $e,
             ]);
+            echo $controller;
         }
     }
 
