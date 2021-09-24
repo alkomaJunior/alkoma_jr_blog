@@ -30,13 +30,9 @@ abstract class Repository extends Model
         //print each attributes value by using fn to define $attr variable
         $params = array_map(fn($attr) => ":$attr", $attributes);
 
-        var_dump($params);
-
         $statement = Application::$app->db->prepare("INSERT INTO $tableName (".implode(',', $attributes).")
                                         VALUES (".implode(',', $params).")
         ");
-
-        var_dump($statement);
 
         foreach ($attributes as $attribute){
             $statement->bindValue(":$attribute", $this->{$attribute});

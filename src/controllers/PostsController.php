@@ -104,10 +104,10 @@ class PostsController extends Controller
                 $comment->new();
                 Application::$app->flashMessage->success('Post commenté avec succès.', 'posts-single?id='.$myPost->getId());
             }
-            else{
-                Application::$app->flashMessage->error("Votre formulaire contient des erreurs....!");
-                Application::$app->flashMessage->display();
-            }
+
+            Application::$app->flashMessage->error("Votre formulaire contient des erreurs....!");
+            Application::$app->flashMessage->display();
+
         }
 
         return $this::twig()->render('front-office/postsSingle.html.twig', [

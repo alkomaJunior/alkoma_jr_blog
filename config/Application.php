@@ -15,7 +15,6 @@ use Twig\Error\SyntaxError;
 class Application
 {
     const EVENT_BEFORE_REQUEST = 'beforeRequest';
-    const EVENT_AFTER_REQUEST = 'afterRequest';
 
     protected array $eventListeners = [];
 
@@ -33,8 +32,8 @@ class Application
     {
         $config = [
             'db' => [
-                'dsn' => $_ENV['DB_DSN'],
-                'user' => $_ENV['DB_USER'],
+                'dsn' => filter_var($_ENV['DB_DSN']),
+                'user' => filter_var($_ENV['DB_USER']),
                 'password' => $_ENV['DB_PASSWORD'],
             ]
         ];
@@ -60,9 +59,9 @@ class Application
         if ($userId) {
             return $this->user = $this->user->findOne(['id' => $userId]);
         }
-        else{
-            return $this->user = new Users();
-        }
+
+        return $this->user = new Users();
+
     }
 
     /**
@@ -97,22 +96,6 @@ class Application
         $this->eventListeners[$eventName][] = $callback;
     }
 
-    /**
-     * @return Controller
-     */
-    public function getController(): Controller
-    {
-        return $this->controller;
-    }
-
-    /**
-     * @param Controller $controller
-     */
-    public function setController(Controller $controller): void
-    {
-        $this->controller = $controller;
-    }
-
     public function login(UserModel $user): bool
     {
         $this->user = $user;
@@ -133,8 +116,4 @@ class Application
         self::$app->session->remove('user');
     }
 
-    public static function isGuest()
-    {
-        return !self::$app->user;
-    }
 }

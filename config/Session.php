@@ -10,26 +10,42 @@ namespace app\config;
  */
 class Session
 {
+    private $session;
+
+    /**
+     * @return mixed
+     */
+    public function getSession()
+    {
+        return $this->session;
+    }
+
+    /**
+     * @param mixed $session
+     */
+    public function setSession($session): void
+    {
+        $this->session = $session;
+    }
+
     public function __construct()
     {
         if (!session_id()) @session_start();
+       $this->session = &$_SESSION;
     }
 
     public function set($key, $value)
     {
-        $session = filter_var_array($_SESSION);
-        $session[$key] = $value;
+        $this->session[$key] = $value;
     }
 
     public function get($key)
     {
-        $session = filter_var_array($_SESSION);
-        return $session[$key] ?? false;
+        return $this->session[$key] ?? false;
     }
 
     public function remove($key)
     {
-        $session = filter_var_array($_SESSION);
-        unset($session[$key]);
+        unset($this->session[$key]);
     }
 }

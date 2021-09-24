@@ -99,6 +99,7 @@ class UsersController extends Controller
                 }
 
             }
+
             Application::$app->flashMessage->error("Votre formulaire contient des erreurs....!");
             Application::$app->flashMessage->display();
         }

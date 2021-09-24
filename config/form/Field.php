@@ -47,26 +47,26 @@ class Field
 
             );
         }
-        else{
-            return sprintf('
-                <label for="%s">%s<span class="text-danger font-weight-medium">*</span></label>
-                <textarea class="form-control %s" rows="%s" name="%s" id="%s" placeholder="%s">%s</textarea>
-                <div class="invalid-feedback">%s</div>
-            
-            ',
 
-                $this->attribute,
-                $this->label,
-                $this->model->hasError($this->attribute) ? ' is-invalid' : '',
-                $this->inputTypeOrRow,
-                $this->attribute,
-                $this->attribute,
-                $this->placeholder,
-                method_exists($this->model, 'get'.ucfirst($this->attribute)) ? call_user_func([$this->model, 'get'.ucfirst($this->attribute)]) : 'no',
-                $this->model->getFirstError($this->attribute),
+        return sprintf('
+            <label for="%s">%s<span class="text-danger font-weight-medium">*</span></label>
+            <textarea class="form-control %s" rows="%s" name="%s" id="%s" placeholder="%s">%s</textarea>
+            <div class="invalid-feedback">%s</div>
+        
+        ',
 
-            );
-        }
+            $this->attribute,
+            $this->label,
+            $this->model->hasError($this->attribute) ? ' is-invalid' : '',
+            $this->inputTypeOrRow,
+            $this->attribute,
+            $this->attribute,
+            $this->placeholder,
+            method_exists($this->model, 'get'.ucfirst($this->attribute)) ? call_user_func([$this->model, 'get'.ucfirst($this->attribute)]) : 'no',
+            $this->model->getFirstError($this->attribute),
+
+        );
+
 
     }
 }
