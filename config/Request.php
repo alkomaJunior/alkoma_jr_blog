@@ -10,51 +10,54 @@ class Request
 {
 
     public function getPath(){
-        $path = $_SERVER['REQUEST_URI'] ?? '/';
-        $position = strpos($path, '?');
-        if ($position === false){
-            return $path;
+        $path = filter_input(INPUT_SERVER, 'REQUEST_URI') ?? '/';
+        if (isset($path)){
+            $position = strpos($path, '?');
+            if ($position === false){
+                return $path;
+            }
+            return substr($path, 0, $position);
         }
-        return substr($path, 0, $position);
     }
 
     public function getMethod(): string
     {
-        return strtolower($_SERVER['REQUEST_METHOD']);
+        $requestMethod = filter_input(INPUT_SERVER, 'REQUEST_METHOD');
+
+        if (isset($requestMethod)) return strtolower($requestMethod);
+
+        return '';
     }
 
     public function isGet($method): bool
     {
-        if ($method === 'get'){
-            return true;
-        }
-        else{
-            return false;
-        }
+        if ($method === 'get') return true;
+
+        return false;
     }
 
     public function isPost($method): bool
     {
-        if ($method === 'post'){
-            return true;
-        }
-        else{
-            return false;
-        }
+        if ($method === 'post') return true;
+
+        return false;
     }
 
     public function getRequestData(): array
     {
         $requestData = [];
 
-        if ($this->isGet($this->getMethod())){
-            foreach ($_GET as $key => $value){
+        $dataGet = filter_input_array(INPUT_GET);
+        $dataPost = filter_input_array(INPUT_POST);
+
+        if (isset($dataGet) && $this->isGet($this->getMethod())){
+            foreach ($dataGet as $key => $value){
                 $requestData[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             }
         }
 
-        if ($this->isPost($this->getMethod())){
-            foreach ($_POST as $key => $value){
+        if (isset($dataPost) && $this->isPost($this->getMethod())){
+            foreach ($dataPost as $key => $value){
                 $requestData[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             }
         }

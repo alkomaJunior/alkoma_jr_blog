@@ -24,18 +24,21 @@ class PostsController extends Controller
      * @throws RuntimeError
      * @throws LoaderError
      */
-    public function indexPosts(){
+    public function indexPosts(): string
+    {
         $totalOfPosts = (new Posts())->numberOfModels()[0];
         $perPage = 8;
         $numberOfPages = ceil($totalOfPosts/$perPage);
-        if (isset($_GET['page']) && $_GET['page'] > 0 && $_GET['page'] <= $numberOfPages){
-            $currentPage = $_GET['page'];
-        }
-        else{
+
+        $currentPage = filter_input(INPUT_GET, 'page');
+
+        if (!isset($currentPage) && !($currentPage > 0) && !($currentPage <= $numberOfPages)){
             $currentPage = 1;
         }
+
         $posts = (new Posts())->allPaginate($currentPage, $perPage);
-        echo $this::twig()->render('front-office/posts.html.twig', [
+
+        return $this::twig()->render('front-office/posts.html.twig', [
             'user'          => $this::$user,
             'me'            => (new Me())->findOne(['id' => 1]),
             'posts'         => $posts,
@@ -49,23 +52,26 @@ class PostsController extends Controller
      * @throws RuntimeError
      * @throws LoaderError
      */
-    public function singlePosts(){
+    public function singlePosts(): string
+    {
 
         $post = new Posts();
         $commentByPost = new Comments();
         $myPost = $post;
         $method = "";
+
         $totalOfComment = (new Comments())->numberOfModels()[0];
         $perPage = 8;
         $numberOfPages = ceil($totalOfComment/$perPage);
-        if (isset($_GET['page']) && $_GET['page'] > 0 && $_GET['page'] <= $numberOfPages){
-            $currentPage = $_GET['page'];
-        }
-        else{
+
+        $currentPage = filter_input(INPUT_GET, 'page');
+
+        if (!isset($currentPage) && !($currentPage > 0) && !($currentPage <= $numberOfPages)){
             $currentPage = 1;
         }
+
         if (Application::$app->request->isGet(Application::$app->request->getMethod())){
-            $myPost = $post->findOne(['id' => (int)$_GET['id']]);
+            $myPost = $post->findOne(['id' => filter_input(INPUT_GET, 'id')]);
             $method = "get";
 
             $commentByPost = (new Comments())->findByIdPaginate(['idPosts' => $myPost->getId()], $currentPage, $perPage);
@@ -104,7 +110,7 @@ class PostsController extends Controller
             }
         }
 
-        echo $this::twig()->render('front-office/postsSingle.html.twig', [
+        return $this::twig()->render('front-office/postsSingle.html.twig', [
             'commentsForm'  => $commentForm,
             'user'          => $this::$user,
             'me'            => (new Me())->findOne(['id' => 1]),
@@ -123,7 +129,8 @@ class PostsController extends Controller
      * @throws RuntimeError
      * @throws LoaderError
      */
-    public function postsList(){
+    public function postsList(): string
+    {
 
         (new BackOfficeProtection())->checkForAdminStatus();
 
@@ -131,7 +138,7 @@ class PostsController extends Controller
         $postsList = $posts->all();
         $_token = $this::$easyCSRF->generate('posts_csrf_token');
 
-        echo $this::twig()->render('back-office/posts/postsList.html.twig', [
+        return $this::twig()->render('back-office/posts/postsList.html.twig', [
             'postsList'        => $postsList,
             'user'             => $this::$user,
             '_token'           => $_token,
@@ -139,7 +146,8 @@ class PostsController extends Controller
         ]);
     }
 
-    public function newPosts(){
+    public function newPosts(): string
+    {
 
         (new BackOfficeProtection())->checkForAdminStatus();
 
@@ -158,17 +166,18 @@ class PostsController extends Controller
 
             //check if form is valid and do actions
             if ($post->isValid()){
+                $post->setImage(rand(1, 9));
                 $post->new();
                 Application::$app->flashMessage->success('Nouveau post enregistré avec succès.', 'posts-index');
             }
-            else{
-                Application::$app->flashMessage->error("Votre formulaire contient des erreurs....!");
-                Application::$app->flashMessage->display();
-            }
+
+            Application::$app->flashMessage->error("Votre formulaire contient des erreurs....!");
+            Application::$app->flashMessage->display();
+
         }
 
-        echo $this::twig()->render('back-office/posts/postsNew.html.twig', [
-            'postsForm' => $postsForm,
+        return $this::twig()->render('back-office/posts/postsNew.html.twig', [
+            'postsForm'   => $postsForm,
             'user'        => $this::$user,
             'request'     => 'add',
             'me'          => (new Me())->findOne(['id' => 1]),
@@ -180,29 +189,29 @@ class PostsController extends Controller
      * @throws SyntaxError
      * @throws LoaderError
      */
-    public function showPosts(){
+    public function showPosts(): string
+    {
 
         (new BackOfficeProtection())->checkForAdminStatus();
 
         $post = new Posts();
-        $myPost = $post->findOne(['id' => (int)$_GET['id']]);
+        $myPost = $post->findOne(['id' => filter_input(INPUT_GET, 'id')]);
 
         $_token = $this::$easyCSRF->generate('comments_csrf_token');
 
         $totalOfComment = (new Comments())->numberOfModels()[0];
-
         $perPage = 8;
         $numberOfPages = ceil($totalOfComment/$perPage);
-        if (isset($_GET['page']) && $_GET['page'] > 0 && $_GET['page'] <= $numberOfPages){
-            $currentPage = $_GET['page'];
-        }
-        else{
+
+        $currentPage = filter_input(INPUT_GET, 'page');
+
+        if (!isset($currentPage) && !($currentPage > 0) && !($currentPage <= $numberOfPages)){
             $currentPage = 1;
         }
 
         $commentByPost = (new Comments())->findByIdPaginate(['idPosts' => $myPost->getId()], $currentPage, $perPage);
 
-        echo $this::twig()->render('back-office/posts/postsShow.html.twig', [
+        return $this::twig()->render('back-office/posts/postsShow.html.twig', [
             'myPost'         => $myPost,
             'user'           => $this::$user,
             'me'             => (new Me())->findOne(['id' => 1]),
@@ -219,12 +228,13 @@ class PostsController extends Controller
      * @throws RuntimeError
      * @throws LoaderError
      */
-    public function editPosts(){
+    public function editPosts(): string
+    {
 
         (new BackOfficeProtection())->checkForAdminStatus();
 
-        $post = (new Posts())->findOne(['id' => (int)$_GET['id']]);
-        $postsForm = (new PostsType($post, "posts-edit?id=".(int)$_GET['id']."", "post"))->createForm();
+        $post = (new Posts())->findOne(['id' => filter_input(INPUT_GET, 'id')]);
+        $postsForm = (new PostsType($post, "posts-edit?id=".filter_input(INPUT_GET, 'id')."", "post"))->createForm();
 
         if (Application::$app->request->isPost(Application::$app->request->getMethod())){
             $data = Application::$app->request->getRequestData();
@@ -233,13 +243,13 @@ class PostsController extends Controller
                 $post->edit(['id' => $post->getId()]);
                 Application::$app->flashMessage->success('Post édité avec succès.', 'posts-index');
             }
-            else{
-                Application::$app->flashMessage->error("Votre formulaire contient des erreurs....!");
-                Application::$app->flashMessage->display();
-            }
+
+            Application::$app->flashMessage->error("Votre formulaire contient des erreurs....!");
+            Application::$app->flashMessage->display();
+
         }
 
-        echo $this::twig()->render('back-office/posts/postsNew.html.twig', [
+        return $this::twig()->render('back-office/posts/postsEdit.html.twig', [
             'postsForm'   => $postsForm,
             'user'        => $this::$user,
             'request'     => 'edit',
@@ -250,7 +260,9 @@ class PostsController extends Controller
 
     public function deletePosts(){
 
-        $post = (new Posts())->findOne(['id' => (int)$_GET['id']]);
+        (new BackOfficeProtection())->checkForAdminStatus();
+
+        $post = (new Posts())->findOne(['id' => filter_input(INPUT_GET, 'id')]);
 
         if (Application::$app->request->isPost(Application::$app->request->getMethod())){
 

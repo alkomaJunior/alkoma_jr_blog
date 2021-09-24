@@ -1,0 +1,35 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% set heroBg = "build/img/hero-bg.png" %}
+
+{% block body %}
+    {% block header %}{{ include('layouts/partials/_navbar.html.twig') }}{% endblock %}
+    <!-- Page Title-->
+    {% set home = "me" %}
+    {% set portfolio = "portfolio-index" %}
+    {% set portfolioNew = "portfolio-new" %}
+    <div class="d-flex p-3" aria-label="Page title" style="margin-top: 5%; margin-bottom: 5%;">
+        <div class="container text-left align-self-center">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ home }}">Mes informations</a></li>
+                    <li class="breadcrumb-item"><a href="{{ portfolio }}">Portfolio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ portfolioNew }}">Ajout d'un projet au portfolio</a></li>
+                </ol>
+            </nav>
+            <h1 class="page-title-heading"><u>Ajout d'un projet au portfolio</u></h1>
+        </div>
+    </div>
+    <!-- Page Content-->
+    <div class="container mb-4">
+        <div class="row">
+            {{ include('layouts/partials/_sidebar.html.twig', {'portfolioActiveClass': 'active'}) }}
+            <!-- Add form -->
+            <div class="col-lg-8 pb-5">
+                {{ include('forms/_portfolioForm.html.twig') }}
+            </div>
+        </div>
+    </div>
+
+    {% block footer %}{{ include('layouts/partials/_footer.html.twig') }}{% endblock %}
+{% endblock %}

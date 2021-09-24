@@ -103,7 +103,7 @@ class Application
         $this->controller = $controller;
     }
 
-    public function login(UserModel $user, $idPost): bool
+    public function login(UserModel $user): bool
     {
         $this->user = $user;
         self::$app->session->set('user', $this->user->getId());

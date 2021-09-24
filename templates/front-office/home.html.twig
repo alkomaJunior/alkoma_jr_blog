@@ -1,8 +1,9 @@
 {% extends 'layouts/base.html.twig' %}
 
 {% set heroBg = "build/img/hero-bg.png" %}
-{% set cv = "build/img/my-cv.png" %}
+{% set cv = "build/img/my-cv.pdf" %}
 {% set connexion = "connexion" %}
+{% set portfolio = "portfolio?page=1" %}
 
 {% block body %}
     {% block header %}{{ include('layouts/partials/_navbar.html.twig', {'homeActiveClass': 'active'}) }}{% endblock %}
@@ -10,7 +11,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 bg-secondary order-md-2 pt-md-5 overflow-hidden">
-                    <div class="mt-5 pt-5"><img class="d-block mx-auto" src="#" alt="alkoma-jr" data-parallax="{&quot;scale&quot; : 1.15}"></div>
+                    <div class="mt-5 pt-5"><img class="d-block mx-auto" src="public/build/img/portrait.png" alt="alkoma-jr" data-parallax="{&quot;scale&quot; : 1.15}"></div>
                 </div>
                 <div class="col-md-6 bg-white order-md-1 py-md-5 overflow-hidden">
                     <div class="mt-md-5 py-5 text-center text-md-left">
@@ -116,13 +117,12 @@
                 <div class="col-md-4 col-sm-6 mb-30">
                     <div class="portfolio-card"><a class="portfolio-thumb" href="#"><img src="#" alt="Portfolio Thumbnail"/></a>
                         <div class="portfolio-card-body">
-                            <div class="portfolio-meta"><a href="#"><i class="fe-icon-heart text-accent"></i>12</a></div>
-                            <h5 class="portfolio-title"><a href="#">iOS App UI Design</a></h5><a class="tag-link" href="#">Mobile Apps</a>
+                            <h5 class="portfolio-title"><a href="#">iOS App UI Design</a></h5>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="text-center pt-2"><a class="btn btn-style-4 btn-gradient btn-icon-right" href="#"><i class="fe-icon-arrow-right text-md"></i>Voir plus</a></div>
+            <div class="text-center pt-2"><a class="btn btn-style-4 btn-gradient btn-icon-right" href="{{ portfolio }}"><i class="fe-icon-arrow-right text-md"></i>Voir plus</a></div>
         </div>
     </section>
     <!-- Contacts-->

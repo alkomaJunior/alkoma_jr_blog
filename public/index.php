@@ -33,6 +33,14 @@ use app\src\controllers\SiteController;
     $app->router->post('/alkoma_blog/comments-del', array(CommentsController::class, 'deleteComments'));
 
     $app->router->get('/alkoma_blog/portfolio', array(PortfolioController::class, 'indexPortfolio'));
+    $app->router->get('/alkoma_blog/portfolio-index', array(PortfolioController::class, 'portfolioList'));
+    $app->router->get('/alkoma_blog/portfolio-single', array(PortfolioController::class, 'singlePortfolio'));
+    $app->router->get('/alkoma_blog/portfolio-new', array(PortfolioController::class, 'newPortfolio'));
+    $app->router->post('/alkoma_blog/portfolio-new', array(PortfolioController::class, 'newPortfolio'));
+    $app->router->get('/alkoma_blog/portfolio-show', array(PortfolioController::class, 'showPortfolio'));
+    $app->router->get('/alkoma_blog/portfolio-edit', array(PortfolioController::class, 'editPortfolio'));
+    $app->router->post('/alkoma_blog/portfolio-edit', array(PortfolioController::class, 'editPortfolio'));
+    $app->router->post('/alkoma_blog/portfolio-del', array(PortfolioController::class, 'deletePortfolio'));
 
     $app->router->get('/alkoma_blog/connexion', array(UsersController::class, 'registerOrLogin'));
     $app->router->post('/alkoma_blog/login', array(UsersController::class, 'registerOrLogin'));
@@ -45,6 +53,7 @@ use app\src\controllers\SiteController;
 
     $app->router->get('/alkoma_blog/messages-index', array(MessagesController::class, 'messagesList'));
     $app->router->get('/alkoma_blog/messages-show', array(MessagesController::class, 'showMessages'));
+    $app->router->post('/alkoma_blog/messages-del', array(MessagesController::class, 'deleteMessages'));
 
     $app->run();
 

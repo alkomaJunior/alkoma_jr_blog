@@ -9,30 +9,45 @@ use app\config\Controller;
 use app\src\form\MeType;
 use app\src\models\Me;
 use app\src\traits\BackOfficeProtection;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class PersonalDataController extends Controller
 {
-    public function indexPersonalData(){
+    /**
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws LoaderError
+     */
+    public function indexPersonalData(): string
+    {
 
         (new BackOfficeProtection())->checkForAdminStatus();
 
         $me = new Me();
         $myMe = $me->findOne(['id' => 1]);
 
-        echo $this::twig()->render('back-office/personalData/personalDataList.html.twig', [
-                'myMe'      => $myMe,
+        return $this::twig()->render('back-office/personalData/personalDataList.html.twig', [
+                'myMe'        => $myMe,
                 'user'        => $this::$user,
                 'me'          => (new Me())->findOne(['id' => 1]),
             ]
         );
     }
 
-    public function meEdit(){
+    /**
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws LoaderError
+     */
+    public function meEdit(): string
+    {
 
         (new BackOfficeProtection())->checkForAdminStatus();
 
-        $me = (new Me())->findOne(['id' => (int)$_GET['id']]);
-        $meForm = (new MeType($me, "me-edit?id=".(int)$_GET['id']."", "post"))->createForm();
+        $me = (new Me())->findOne(['id' => filter_input(INPUT_GET, 'id')]);
+        $meForm = (new MeType($me, "me-edit?id=".filter_input(INPUT_GET, 'id')."", "post"))->createForm();
 
         if (Application::$app->request->isPost(Application::$app->request->getMethod())){
             $data = Application::$app->request->getRequestData();
@@ -41,13 +56,13 @@ class PersonalDataController extends Controller
                 $me->edit(['id' => $me->getId()]);
                 Application::$app->flashMessage->success('Informations éditées avec succès.', 'me');
             }
-            else{
-                Application::$app->flashMessage->error("Votre formulaire contient des erreurs....!");
-                Application::$app->flashMessage->display();
-            }
+
+            Application::$app->flashMessage->error("Votre formulaire contient des erreurs....!");
+            Application::$app->flashMessage->display();
+
         }
 
-        echo $this::twig()->render('back-office/personalData/meEdit.html.twig', [
+        return $this::twig()->render('back-office/personalData/meEdit.html.twig', [
             'meForm'      => $meForm,
             'user'        => $this::$user,
             'me'          => (new Me())->findOne(['id' => 1]),
