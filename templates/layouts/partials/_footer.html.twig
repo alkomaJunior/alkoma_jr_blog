@@ -1,4 +1,6 @@
 {% set cBg = "build/img/contacts-bg.png" %}
+{% set login = "connexion" %}
+
 <footer class="bg-secondary bg-cover bg-no-repeat pt-5 pb-4" style="background-image: url({{ cBg }});" data-offset-top="-10" id="contacts">
     <div class="container py-2">
         <hr>
@@ -8,7 +10,7 @@
                 <a onclick="window.open(this); return false;" class="social-btn sb-style-6 sb-instagram" href="{{ me.instagramLink }}"><i class="socicon-instagram"></i></a>
                 <a onclick="window.open(this); return false;" class="social-btn sb-style-6 sb-linkedin" href="{{ me.linkedinLink }}"><i class="socicon-linkedin"></i></a></div>
             <p class="m-0 text-sm order-1">
-                <span class='opacity-80'><span class="font-weight-bold"> @alkoma-jr</span>© Tous droits  réservés</span>
+                <span class='opacity-80'><a href="{{ login }}" class="font-weight-bold"> @alkoma-jr</a>© Tous droits  réservés</span>
             </p>
         </div>
     </div>

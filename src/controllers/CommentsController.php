@@ -7,13 +7,16 @@ namespace app\src\controllers;
 use app\config\Application;
 use app\config\Controller;
 use app\src\models\Comments;
+use app\src\traits\BackOfficeProtection;
 use EasyCSRF\Exceptions\InvalidCsrfTokenException;
 
 class CommentsController extends Controller
 {
     public function deleteComments(){
 
-        $comment = (new Comments())->findOne(['id' => (int)$_GET['id']]);
+        (new BackOfficeProtection())->checkForAdminStatus();
+
+        $comment = (new Comments())->findOne(['id' => filter_input(INPUT_GET, 'id')]);
 
         if (Application::$app->request->isPost(Application::$app->request->getMethod())){
 

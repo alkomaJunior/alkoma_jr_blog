@@ -71,7 +71,7 @@ class PostsController extends Controller
         }
 
         if (Application::$app->request->isGet(Application::$app->request->getMethod())){
-            $myPost = $post->findOne(['id' => (int)$_GET['id']]);
+            $myPost = $post->findOne(['id' => filter_input(INPUT_GET, 'id')]);
             $method = "get";
 
             $commentByPost = (new Comments())->findByIdPaginate(['idPosts' => $myPost->getId()], $currentPage, $perPage);

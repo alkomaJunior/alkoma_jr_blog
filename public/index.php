@@ -53,6 +53,7 @@ use app\src\controllers\SiteController;
 
     $app->router->get('/alkoma_blog/messages-index', array(MessagesController::class, 'messagesList'));
     $app->router->get('/alkoma_blog/messages-show', array(MessagesController::class, 'showMessages'));
+    $app->router->post('/alkoma_blog/messages-del', array(MessagesController::class, 'deleteMessages'));
 
     $app->run();
 
