@@ -24,7 +24,8 @@ class SiteController extends Controller
      * @throws SyntaxError
      * @throws LoaderError
      */
-    public function home(){
+    public function home(): string
+    {
 
         //form building
         $message = new Messages();
@@ -50,7 +51,7 @@ class SiteController extends Controller
 
         }
 
-        echo $this::twig()->render('front-office/home.html.twig', [
+        return $this::twig()->render('front-office/home.html.twig', [
             'messageForm' => $messagesForm,
             'user'        => $this::$user,
             'me'          => (new Me())->findOne(['id' => 1]),
@@ -62,8 +63,9 @@ class SiteController extends Controller
      * @throws RuntimeError
      * @throws LoaderError
      */
-    public function _404(){
-        echo $this::twig()->render('/errors/_404.html.twig', [
+    public function _404(): string
+    {
+        return $this::twig()->render('/errors/_404.html.twig', [
             'user'        => $this::$user,
             'me'          => (new Me())->findOne(['id' => 1]),
         ]);

@@ -34,7 +34,7 @@ class Application
             'db' => [
                 'dsn' => filter_var($_ENV['DB_DSN']),
                 'user' => filter_var($_ENV['DB_USER']),
-                'password' => $_ENV['DB_PASSWORD'],
+                'password' => filter_var($_ENV['DB_PASSWORD']),
             ]
         ];
         $this->db = new Database($config['db']);
