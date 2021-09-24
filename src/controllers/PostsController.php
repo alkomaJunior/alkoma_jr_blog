@@ -120,7 +120,6 @@ class PostsController extends Controller
             'numberOfPages' => $numberOfPages,
             'currentPage'   => $currentPage,
             'totalOfComment' => $totalOfComment,
-
         ]);
     }
 
@@ -222,6 +221,7 @@ class PostsController extends Controller
             '_token'         => $_token,
         ]);
     }
+
 
     /**
      * @throws SyntaxError
