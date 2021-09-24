@@ -27,34 +27,14 @@ class Application
     public Controller $controller;
     public ?UserModel $user;
     public Session $session;
-    private $env;
-
-    /**
-     * @param mixed $env
-     */
-    public function setEnv($env): void
-    {
-        $this->env = $env;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEnv()
-    {
-        return $this->env;
-    }
 
     public function __construct()
     {
-
-        (isset($_ENV)) ? $this->env = &$_ENV : $this->env = null;
-
         $config = [
             'db' => [
-                'dsn'      => $this->env['DB_DSN'],
-                'user'     => $this->env['DB_USER'],
-                'password' => $this->env['DB_PASSWORD'],
+                'dsn'      => $_ENV['DB_DSN'],
+                'user'     => $_ENV['DB_USER'],
+                'password' => $_ENV['DB_PASSWORD'],
             ]
         ];
         $this->db = new Database($config['db']);
