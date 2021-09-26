@@ -62,7 +62,7 @@ class Field
             $this->attribute,
             $this->attribute,
             $this->placeholder,
-            method_exists($this->model, 'get'.ucfirst($this->attribute)) ? call_user_func([$this->model, 'get'.ucfirst($this->attribute)]) : 'no',
+            method_exists($this->model, 'get'.ucfirst($this->attribute)) ? call_user_func([$this->model, 'get'.ucfirst($this->attribute)]) : '',
             $this->model->getFirstError($this->attribute),
 
         );
