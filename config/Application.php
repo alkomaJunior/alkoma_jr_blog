@@ -30,6 +30,7 @@ class Application
 
     public function __construct()
     {
+        // Database configuration
         $config = [
             'db' => [
                 'dsn'      => filter_var(filter_var_array($_ENV)['DB_DSN']),
@@ -69,20 +70,20 @@ class Application
      * @throws SyntaxError
      * @throws LoaderError
      */
+    // To test if route exist. If not return a 404 page
     public function run()
     {
         $this->triggerEvent(self::EVENT_BEFORE_REQUEST);
         try {
-            $router = $this->router->resolve();
-            echo  $router;
+            print $this->router->resolve();
         } catch (\Exception $e) {
-            $controller = $this->controller::twig()->render('', [
+            return $this->controller::twig()->render('', [
                 'exception' => $e,
             ]);
-            echo $controller;
         }
     }
 
+    // To test and call the appropriate controller when receive request
     public function triggerEvent($eventName)
     {
         $callbacks = $this->eventListeners[$eventName] ?? [];
@@ -96,6 +97,7 @@ class Application
         $this->eventListeners[$eventName][] = $callback;
     }
 
+    // To log user by role
     public function login(UserModel $user): bool
     {
         $this->user = $user;
@@ -105,11 +107,12 @@ class Application
 
             $this->response->redirect('/alkoma_blog/');
         }
-        else $this->response->redirect('/alkoma_blog/me');
+        $this->response->redirect('/alkoma_blog/me');
 
         return true;
     }
 
+    // To logout user
     public function logout()
     {
         $this->user = null;

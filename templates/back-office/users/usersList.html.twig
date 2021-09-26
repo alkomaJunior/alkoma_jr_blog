@@ -1,0 +1,71 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% set heroBg = "build/img/hero-bg.png" %}
+
+{% block body %}
+    {% block header %}{{ include('layouts/partials/_navbar.html.twig') }}{% endblock %}
+    <!-- Page Title-->
+    {% set home = "me" %}
+    {% set usersList = "users-index" %}
+    <div class="d-flex p-3" aria-label="Page title" style="margin-top: 5%; margin-bottom: 5%;">
+        <div class="container text-left align-self-center">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ home }}">Mes informations</a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="{{ usersList }}">Liste des abonnés</a>
+                    </li>
+                </ol>
+            </nav>
+            <h1 class="page-title-heading"><u>Liste des abonnés</u></h1>
+        </div>
+    </div>
+    <!-- Page Content-->
+    <div class="container mb-4">
+        <div class="row">
+            {{ include('layouts/partials/_sidebar.html.twig', {'usersActiveClass': 'active'}) }}
+            <!-- Orders Table-->
+            <div class="col-lg-8 pb-5">
+                <div class="table-responsive">
+                    <table id="example" class="table table-hover mb-0">
+                        <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Prénoms</th>
+                            <th>Email</th>
+                            <th>Date d'abonnement</th>
+                            <th>Tél</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ user.lastName }}</td>
+                                <td>{{ user.firstName }}</td>
+                                <td><span class="badge badge-danger m-0">{{ user.emailAddress }}</span></td>
+                                <td>{{ user.datePublish|date('Y-m-d H:i:s') }}</td>
+                                <td>{{ user.phoneNumber }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable({
+                "bLengthChange": false,
+                "bFilter": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json",
+                }
+            });
+        } );
+    </script>
+
+    {% block footer %}{{ include('layouts/partials/_footer.html.twig') }}{% endblock %}
+{% endblock %}

@@ -16,6 +16,24 @@ class Users extends UserModel
     protected $password;
     protected $confirmPassword;
     protected $role;
+    protected $datePublish;
+    //protected $isValid;
+
+    /**
+     * @return mixed
+     */
+    public function getDatePublish()
+    {
+        return $this->datePublish;
+    }
+
+    /**
+     * @param mixed $datePublish
+     */
+    public function setDatePublish($datePublish): void
+    {
+        $this->datePublish = $datePublish;
+    }
 
     public function tableName(): string
     {
@@ -78,7 +96,7 @@ class Users extends UserModel
     }
 
     /**
-     * @param mixed $emailAdress
+     * @param $emailAddress
      */
     public function setEmailAddress($emailAddress): void
     {
@@ -184,4 +202,4 @@ class Users extends UserModel
     {
         return $this->firstName . ' ' . $this->lastName;
     }
-}
+ }

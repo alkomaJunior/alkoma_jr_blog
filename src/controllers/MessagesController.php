@@ -48,7 +48,7 @@ class MessagesController extends Controller
 
         $myMessage = (new Messages())->findOne(['id' => filter_input(INPUT_GET, 'id')]);
 
-        $myMessage->markIsRead(['id' => $myMessage->getId()]);
+        if ($myMessage->getIsRead() == 0) $myMessage->changeBoolStatus(['id' => $myMessage->getId()], ['isRead' => 1]);
 
         return $this::twig()->render('back-office/messages/messagesShow.html.twig', [
             'myMessage'      => $myMessage,
@@ -77,7 +77,7 @@ class MessagesController extends Controller
                 }
 
                 $portfolio->remove(['id' => $portfolio->getId()]);
-                Application::$app->flashMessage->success('Message supprimé avec succès.', 'portfolio-index');
+                Application::$app->flashMessage->success('Message supprimé avec succès.', 'messages-index');
             }
         }
     }

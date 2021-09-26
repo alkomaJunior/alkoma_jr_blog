@@ -19,6 +19,7 @@ class Controller
     protected static NativeSessionProvider $sessionProvider;
     protected static EasyCSRF $easyCSRF;
 
+    // To get connected user at any time and session flash messages
     public function __construct()
     {
 
@@ -33,6 +34,7 @@ class Controller
 
     }
 
+    // To render view
     public static function twig(): Environment
     {
         $loader = new FilesystemLoader(__DIR__.'/../templates');

@@ -4,3 +4,6 @@
 /node_modules
 /assets
 webpack.config.js
+.gitignore
+package-lock.json
+package.json

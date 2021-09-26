@@ -32,9 +32,8 @@ class CommentsController extends Controller
                 }
 
                 $comment->remove(['id' => $comment->getId()]);
-                Application::$app->flashMessage->success('Commentaire supprimé avec succès.', 'posts-show?id='.$data['_postId']);
+                Application::$app->flashMessage->success('Commentaire supprimé avec succès.', 'posts-show?id='.$data['_postId'.'&page=1']);
             }
         }
     }
-
 }

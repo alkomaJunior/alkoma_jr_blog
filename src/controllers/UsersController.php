@@ -11,6 +11,7 @@ use app\src\form\UsersType;
 use app\src\models\Auth;
 use app\src\models\Me;
 use app\src\models\Users;
+use app\src\traits\BackOfficeProtection;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -112,5 +113,23 @@ class UsersController extends Controller
     public function logout(){
         Application::$app->logout();
         Application::$app->response->redirect('/alkoma_blog/');
+    }
+
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
+    public function usersList(): string
+    {
+        (new BackOfficeProtection())->checkForAdminStatus();
+
+        $user = new Users();
+        $users = $user->allSuscriber();
+
+        return $this::twig()->render('back-office/users/usersList.html.twig', [
+            'users'     => $users,
+            'me'            => (new Me())->findOne(['id' => 1]),
+        ]);
     }
 }

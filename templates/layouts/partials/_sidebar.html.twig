@@ -2,6 +2,7 @@
 {% set message = "messages-index" %}
 {% set posts = "posts-index" %}
 {% set portfolio = "portfolio-index" %}
+{% set users = "users-index" %}
 {% set logout = "logout" %}
 
 <div class="col-lg-4 pb-5">
@@ -22,6 +23,14 @@
                     <div>
                         <i class="fe-icon-info mr-1 text-muted"></i>
                         <div class="d-inline-block font-weight-medium text-uppercase">Mes informations</div>
+                    </div>
+                </div>
+            </a>
+            <a class="list-group-item {{ usersActiveClass ?? "" }}" href="{{ users }}">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <i class="fe-icon-user mr-1 text-muted"></i>
+                        <div class="d-inline-block font-weight-medium text-uppercase">Abonnés</div>
                     </div>
                 </div>
             </a>

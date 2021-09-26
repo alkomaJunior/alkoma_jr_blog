@@ -1,11 +1,11 @@
 {% extends 'layouts/base.html.twig' %}
+{% set home = "/alkoma_blog/" %}
 
 {% block body %}
     {% block header %}{{ include('layouts/partials/_navbar.html.twig') }}{% endblock %}
     <div class="container py-5 mb-4 text-center">
         <h1 class="display-404">404</h1>
-        <h2 class="h3">Page Not Found</h2>
-        <p class="text-muted">It seems we can’t find the page you are looking for. <a href='#' class='font-weight-medium'>Go Back To Homepage</a><br> Or try using search at the top right corner of the page.</p>
+        <h2 class="h3">Page introuvable</h2>
+        <p class="text-muted">Il semble que nous ne puissions pas trouver la page que vous recherchez. <a href="{{ home }}" class='font-weight-medium'>Retourner à la page d'accueil</a></p>
     </div>
-    {% block footer %}{{ include('layouts/partials/_footer.html.twig') }}{% endblock %}
 {% endblock %}

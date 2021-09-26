@@ -33,6 +33,7 @@ class Router
         $this->routes['post'][$path] = $callback;
     }
 
+    // Process th requested url
     public function resolve(){
 
         $path = $this->request->getPath();
