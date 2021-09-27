@@ -16,6 +16,23 @@ class Comments extends Repository
     protected int $idPosts;
     protected $author;
     protected $datePublish;
+    protected $isValid;
+
+    /**
+     * @return mixed
+     */
+    public function getIsValid()
+    {
+        return $this->isValid;
+    }
+
+    /**
+     * @param mixed $isValid
+     */
+    public function setIsValid($isValid): void
+    {
+        $this->isValid = $isValid;
+    }
 
     /**
      * @return mixed

@@ -75,7 +75,7 @@ class Application
     {
         $this->triggerEvent(self::EVENT_BEFORE_REQUEST);
         try {
-            print $this->router->resolve();
+            echo $this->router->resolve();
         } catch (\Exception $e) {
             return $this->controller::twig()->render('', [
                 'exception' => $e,
@@ -107,7 +107,7 @@ class Application
 
             $this->response->redirect('/alkoma_blog/');
         }
-        $this->response->redirect('/alkoma_blog/me');
+        else $this->response->redirect('/alkoma_blog/me');
 
         return true;
     }
