@@ -13,3 +13,9 @@
 * Importer le fichier "/alkoma.sql" vers votre serveur de base de données via phpmyadmin (dbname:"alkoma" chez moi | localhost/phpmyadmin) ;
 * Configurer la connexion à la base de donnée dans le fichier "/.env.example" en le renommant en ".env" ;
 * Se rendre dans le navigateur et taper l'adresse suivante : http://localhost/alkoma_blog/.
+
+## Authentifiction :
+
+Après avoir crée la base de données avec les données importées pour se connecter en tant qu'admin utiliser les paramètres suivants :
+* email : admin@alkoma.com
+* password : alkoma
