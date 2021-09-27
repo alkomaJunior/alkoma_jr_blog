@@ -74,7 +74,7 @@ class PostsController extends Controller
             $myPost = $post->findOne(['id' => filter_input(INPUT_GET, 'id')]);
             $method = "get";
 
-            $commentByPost = (new Comments())->findByIdPaginate(['idPosts' => $myPost->getId()], $currentPage, $perPage);
+            $commentByPost = (new Comments())->findByIdPaginate(['idPosts' => $myPost->getId(), 'isValid' => 1], $currentPage, $perPage);
 
         }
 
@@ -91,7 +91,7 @@ class PostsController extends Controller
             $myPost = $post->findOne(['id' => $data['id']]);
             $method = "post";
 
-            $commentByPost = (new Comments())->findByIdPaginate(['idPosts' => $myPost->getId()], $currentPage, $perPage);
+            $commentByPost = (new Comments())->findByIdPaginate(['idPosts' => $myPost->getId(), 'isValid' => 1], $currentPage, $perPage);
 
             //hydration of the class
             $comment->loadData($data);
@@ -102,7 +102,7 @@ class PostsController extends Controller
                 $comment->setIdPosts($myPost->getId());
                 $comment->setAuthor(Application::$app->getUser()->getFirstName().' '.Application::$app->getUser()->getLastName());
                 $comment->new();
-                Application::$app->flashMessage->success('Post commenté avec succès.', 'posts-single?id='.$myPost->getId());
+                Application::$app->flashMessage->success('Post commenté avec succès. Il sera publié après validation.', 'posts-single?id='.$myPost->getId());
             }
 
             Application::$app->flashMessage->error("Votre formulaire contient des erreurs....!");

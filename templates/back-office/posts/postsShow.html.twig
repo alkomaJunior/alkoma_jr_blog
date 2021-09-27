@@ -3,6 +3,7 @@
 {% set heroBg = "build/img/hero-bg.png" %}
 
 {% set commentDelete = "comments-del?" %}
+{% set commentValidate = "comments-val?" %}
 
 {% block body %}
     {% block header %}{{ include('layouts/partials/_navbar.html.twig') }}{% endblock %}
@@ -61,7 +62,35 @@
                             </div>
 
                             <div class="pt-3">
+                                {% if comment.isValid == 0 %}
+                                    <a class="btn btn-warning btn-sm" data-toggle="modal" href="#warningModal{{ comment.id }}"><i class="fe-icon-check"></i>&nbsp;Valider</a>
+                                {% else %}
+
+                                {% endif %}
                                 <a class="btn btn-danger btn-sm" data-toggle="modal" href="#dangerModal{{ comment.id }}"><i class="fe-icon-delete"></i>&nbsp;Supprimer</a>
+                            </div>
+
+                            <div class="modal fade" id="warningModal{{ comment.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-warning" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Confirmation de la validation</h4>
+                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Etes-vous sûr de vouloir valider ce commentaire ??</p>
+                                        </div>
+                                        <form method="post" action="{{ commentValidate~"id="~comment.id }}">
+                                            <div class="modal-footer">
+                                                <input type="hidden" name="_method" value="VALIDATE">
+                                                <input type="hidden" name="_token" value="{{ _token }}">
+                                                <input type="hidden" name="_postId" value="{{ myPost.id }}">
+                                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Fermer</button>
+                                                <button class="btn btn-warning" type="submit">Valider</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="modal fade" id="dangerModal{{ comment.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -72,7 +101,7 @@
                                             <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                                         </div>
                                         <div class="modal-body">
-                                            <p>Etes-vous sûr de vouloir supprimer ce commentaires ??</p>
+                                            <p>Etes-vous sûr de vouloir supprimer ce commentaire ??</p>
                                         </div>
                                         <form method="post" action="{{ commentDelete~"id="~comment.id }}">
                                             <div class="modal-footer">

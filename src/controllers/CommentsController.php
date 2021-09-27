@@ -32,7 +32,33 @@ class CommentsController extends Controller
                 }
 
                 $comment->remove(['id' => $comment->getId()]);
-                Application::$app->flashMessage->success('Commentaire supprimé avec succès.', 'posts-show?id='.$data['_postId'.'&page=1']);
+                Application::$app->flashMessage->success('Commentaire supprimé avec succès.', 'posts-show?id='.$data['_postId'].'&page=1');
+            }
+        }
+    }
+
+    public function validateComments(){
+
+        (new BackOfficeProtection())->checkForAdminStatus();
+
+        $comment = (new Comments())->findOne(['id' => filter_input(INPUT_GET, 'id')]);
+
+        if (Application::$app->request->isPost(Application::$app->request->getMethod())){
+
+            $data = Application::$app->request->getRequestData();
+
+            if ($data['_method'] === "VALIDATE"){
+
+                try {
+                    $this::$easyCSRF->check('comments_csrf_token', $data['_token'], "", true);
+                }
+                catch (InvalidCsrfTokenException $e){
+                    Application::$app->flashMessage->error($e->getMessage(), 'posts-index');
+                }
+
+                if ($comment->getIsValid() == 0) $comment->changeBoolStatus(['id' => $comment->getId()], ['isValid' => 1]);
+
+                Application::$app->flashMessage->success('Commentaire approuvé avec succès.', 'posts-show?id='.$data['_postId'].'&page=1');
             }
         }
     }
